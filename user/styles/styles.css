@@ -1,0 +1,42 @@
+body {
+  background-image: url("../../assets/images/background.jpg");
+  /* <-- your image path */
+  background-size: cover;
+  /* make it fill the screen */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  /* stays when you scroll */
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* white with 80% opacity */
+  border-radius: 10px;
+  padding: 20px;
+}
+.product-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.btn-block {
+  font-weight: bold;
+}
+.text-muted {
+  font-size: 0.9rem;
+}
+
+/* ADD THIS PART */
+.card-img-top {
+  height: 250px;
+  object-fit: cover;
+}

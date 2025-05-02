@@ -1,0 +1,167 @@
+/* Base styles */
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: darkgreen;
+  font-family: Arial, sans-serif;
+  padding: 20px; /* ✅ Adds breathing space on small screens */
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px; /* ✅ Prevents it from stretching too wide */
+  min-width: 280px; /* ✅ Prevents it from shrinking too much */
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.card img {
+  width: 80%;
+  max-width: 150px;
+  margin: 0 auto 20px;
+  display: block;
+  object-fit: contain;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+  color: darkgreen;
+  font-size: 24px;
+}
+
+/* Input styling */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #568203;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #466902;
+}
+
+/* Text & link styling */
+p {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+a {
+  color: #1a2321;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Alert boxes */
+.alert {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* ✅ Responsive tweaks */
+@media (max-width: 400px) {
+  .card {
+    padding: 20px 15px;
+  }
+
+  .card h2 {
+    font-size: 20px;
+  }
+
+  .input-container input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
+
+.product-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.btn-block {
+  font-weight: bold;
+}
+
+/* Sidebar categories */
+.sidebar-categories {
+  background-color: rgba(200, 200, 200, 0.3);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.category-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.category-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
