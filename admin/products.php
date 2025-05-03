@@ -1,6 +1,50 @@
 <?php
 include '../includes/db.php';
 include '../includes/auth_check.php';
+
+// Helper: Compress and Resize Image
+function compressAndResizeImage($sourcePath, $destinationPath, $quality = 70, $maxWidth = 1000)
+{
+    $info = getimagesize($sourcePath);
+    $mime = $info['mime'];
+
+    switch ($mime) {
+        case 'image/jpeg':
+            $image = imagecreatefromjpeg($sourcePath);
+            break;
+        case 'image/png':
+            $image = imagecreatefrompng($sourcePath);
+            break;
+        case 'image/webp':
+            $image = imagecreatefromwebp($sourcePath);
+            break;
+        default:
+            move_uploaded_file($sourcePath, $destinationPath);
+            return;
+    }
+
+    $width = imagesx($image);
+    $height = imagesy($image);
+
+    if ($width > $maxWidth) {
+        $newWidth = $maxWidth;
+        $newHeight = floor($height * ($maxWidth / $width));
+
+        $resized = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($resized, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagedestroy($image);
+        $image = $resized;
+    }
+
+    if ($mime === 'image/png' || $mime === 'image/webp') {
+        imagejpeg($image, $destinationPath, $quality);
+    } else {
+        imagejpeg($image, $destinationPath, $quality);
+    }
+
+    imagedestroy($image);
+}
+
 // Handle Add/Edit Product or Stock
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['form_type'])) {
@@ -17,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!is_dir('../assets/images'))
                 mkdir('../assets/images', 0777, true);
 
-            move_uploaded_file($image['tmp_name'], $imagePath);
+            compressAndResizeImage($image['tmp_name'], $imagePath, 70, 1000);
 
             $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image, stock) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$name, $price, $category, $imagePath, 1]);
@@ -32,7 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $image = $_FILES['product_image'];
                 $imageName = time() . '_' . basename($image['name']);
                 $imagePath = '../assets/images/' . $imageName;
-                move_uploaded_file($image['tmp_name'], $imagePath);
+
+                compressAndResizeImage($image['tmp_name'], $imagePath, 70, 1000);
 
                 $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, image=? WHERE id=?");
                 $stmt->execute([$name, $price, $category, $imagePath, $id]);
@@ -132,7 +177,6 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                 </div>
             <?php endforeach; ?>
 
-            <!-- Add Product Card -->
             <div class="col">
                 <div class="card h-100 text-center"
                     style="border: 2px dashed #ccc; background: #f9f9f9; cursor: pointer;" data-bs-toggle="modal"
@@ -146,7 +190,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
         </div>
     </div>
 
-    <!-- Shared Modal -->
+    <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -213,8 +257,16 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                         </div>
                         <div class="mb-3">
                             <label>Category</label>
-                            <input type="text" name="product_category" class="form-control" required>
+                            <select name="product_category" class="form-select" required>
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="Jackets">Jackets</option>
+                                <option value="Backpacks">Backpacks</option>
+                                <option value="Footwear">Footwear</option>
+                                <option value="Accessories">Accessories</option>
+                                <option value="Bundles">Bundles</option>
+                            </select>
                         </div>
+
                         <div class="mb-3">
                             <label>Product Image</label>
                             <input type="file" name="product_image" class="form-control" accept="image/*" required>

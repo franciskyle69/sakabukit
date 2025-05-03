@@ -1,12 +1,5 @@
 body {
   background-image: url("../../assets/images/background.jpg");
-  /* <-- your image path */
-  background-size: cover;
-  /* make it fill the screen */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  /* stays when you scroll */
   font-family: "Poppins", sans-serif;
 }
 

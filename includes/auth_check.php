@@ -1,7 +1,7 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
+session_start();
+
 // If no role is set, treat as guest
 if (!isset($_SESSION['role'])) {
     $_SESSION['role'] = 'guest';
