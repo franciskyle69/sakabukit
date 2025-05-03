@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../includes/db.php'; // Your database connection
-
+include '../includes/auth_check.php';
 // Fetch all orders
 $result = $conn->query("SELECT * FROM orders ORDER BY order_date DESC");
 ?>

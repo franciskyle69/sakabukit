@@ -1,6 +1,6 @@
 <?php
 include '../includes/db.php';
-
+include '../includes/auth_check.php';
 // Check if there is an ID in the URL
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // Make sure it's an integer

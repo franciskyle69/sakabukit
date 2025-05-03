@@ -1,9 +1,9 @@
 <?php
 include '../includes/db.php';
-
+include '../includes/auth_check.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productId = $_POST['product_id'];
-    $quantity = (int)$_POST['quantity'];
+    $quantity = (int) $_POST['quantity'];
 
     if ($quantity > 0) {
         $stmt = $pdo->prepare("UPDATE products SET stock = stock + ? WHERE id = ?");

@@ -1,4 +1,5 @@
 <?php
+include '../includes/auth_check.php';
 session_start();
 include '../includes/db.php'; // Your DB connection
 

@@ -62,7 +62,12 @@
 
     <main class="container mt-4 mb-5">
         <div class="content p-4">
-            <h1>Welcome to the Saka Buk IT</h1>
+            <?php if ($role === 'user'): ?>
+                <p>Welcome <?= htmlspecialchars($_SESSION['full_name'] ?? '') ?>!</p>
+            <?php else: ?>
+                <p>Welcome, Guest!</p>
+                <a href="../login.php">Login</a> or <a href="../signup.php">Sign up</a>
+            <?php endif; ?>
             <p class="text-muted">Your partner in the mountain!</p>
             <br>
 

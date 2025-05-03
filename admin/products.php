@@ -1,6 +1,6 @@
 <?php
 include '../includes/db.php';
-
+include '../includes/auth_check.php';
 // Handle Add/Edit Product or Stock
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['form_type'])) {

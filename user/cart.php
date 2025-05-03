@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../includes/db.php'; // Ensure this connects to your DB
-
+include '../includes/auth_check.php';
 // Initialize cart if not set
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];

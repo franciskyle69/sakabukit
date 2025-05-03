@@ -1,4 +1,5 @@
 <?php
+include '../includes/auth_check.php';
 if (!isset($_GET['order_id'])) {
     header('Location: products.php');
     exit();

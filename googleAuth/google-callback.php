@@ -28,10 +28,27 @@ if (isset($_GET['code'])) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) {
-            $_SESSION['error'] = 'Access denied. Your email is not registered.';
-            header('Location: ../login.php');
-            exit();
+            // Auto-register Google user
+            $nameParts = explode(" ", $userInfo->name, 2);
+            $firstName = $nameParts[0];
+            $lastName = $nameParts[1] ?? '';
+
+            $stmt = $pdo->prepare("INSERT INTO users (firstname, lastname, username, email, role, created_at) VALUES (?, ?, ?, ?, 'user', NOW())");
+            $stmt->execute([
+                $firstName,
+                $lastName,
+                $email, // Using email as username fallback
+                $email
+            ]);
+
+            $userId = $pdo->lastInsertId();
+
+            // Fetch the newly inserted user
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+            $stmt->execute([$userId]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
         }
+
 
         // Set session values
         $_SESSION['user_type'] = 'google';

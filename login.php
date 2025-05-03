@@ -1,5 +1,6 @@
-<?php session_start();
+<?php
 
+require_once 'includes/auth_check.php';
 $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
 ?>
 <!DOCTYPE html>

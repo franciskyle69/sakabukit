@@ -1,6 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-
+include '../includes/auth_check.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();

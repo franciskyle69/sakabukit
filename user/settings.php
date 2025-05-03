@@ -1,5 +1,5 @@
 <?php include '../includes/navbar.php';
-
+include '../includes/auth_check.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

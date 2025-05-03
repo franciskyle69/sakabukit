@@ -4,11 +4,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Corrected path to autoload.php
     require_once __DIR__ . '/../vendor/autoload.php'; // Correct path to autoload
     require_once __DIR__ . '/../includes/db.php';     // Assuming db.php is inside includes/
-    
 
-   
-    
-    
+
+
+
+
 
     $mpdf = new \Mpdf\Mpdf(); // Ensure the Mpdf class is loaded
     header('Content-Type: application/pdf');
@@ -81,12 +81,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print Products</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
 </head>
+
 <body>
 
     <form method="POST" action="simple_print.php" class="container mt-5">
@@ -96,4 +98,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
 </body>
+
 </html>
