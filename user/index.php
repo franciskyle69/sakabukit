@@ -7,8 +7,8 @@
     <title>Home</title>
 
     <!-- External Stylesheets -->
-    <link rel="stylesheet" href="../user/styles/styles.css">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     <!-- Bootstrap JavaScript -->
@@ -78,7 +78,7 @@
                         <h5 class="card-title mt-3">Kulago</h5>
                         <div class="card-body d-flex justify-content-center">
                             <div class="video-wrapper" data-title="Kulago"
-                                data-description="Discover the peaceful beauty of Mount Kulago, where every step brings you closer to nature’s calm and endless adventure.">
+                                data-description="Discover the peaceful beauty of Mount Kulago, where every step brings you closer to nature's calm and endless adventure.">
                                 <video class="w-100" style="max-height: 400px; object-fit: cover;">
                                     <source src="../assets/videos/promote.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <p class="text-muted">Discover the peaceful beauty of Mount Kulago, where every step brings you
-                            closer to nature’s calm and endless adventure.</p>
+                            closer to nature's calm and endless adventure.</p>
                     </div>
                 </div>
 

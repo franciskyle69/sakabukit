@@ -45,6 +45,7 @@ $role = $_SESSION['role'] ?? 'guest';
           <li class="nav-item"><a class="nav-link text-white" href="../admin/reports.php">Reports</a></li>
 
         <?php elseif ($role === 'user'): ?>
+          <li class="nav-item"><a class="nav-link text-white" href="../user/bookings.php">Bookings</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="../user/products.php">Products</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="../user/settings.php">Settings</a></li>
         <?php endif; ?>

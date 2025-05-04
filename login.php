@@ -9,10 +9,13 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
 <head>
     <title>Login</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="https://cdn.materialdesignicons.com/7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -120,57 +123,83 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
 <body>
     <div class="container custom-container">
         <div class="card custom-card">
-            <img src="assets/images/logo.png" alt="This is the logo"
-                style="width: 200px; height: 200px; display: block; margin: 0 auto;">
-
+            <img src="assets/images/logo.png" alt="Logo" class="custom-logo">
+            
             <div class="card-body">
-
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger" role="alert">
-                        <?= $_SESSION['error'];
-                        unset($_SESSION['error']); ?>
-                    </div>a
-                <?php endif; ?>
-                <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success" role="alert">
-                        <?= $_SESSION['success'];
-                        unset($_SESSION['success']); ?>
+                        <i class="mdi mdi-alert-circle me-2"></i>
+                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
                     </div>
                 <?php endif; ?>
-                <h2 class="custom-heading">Login</h2>
+                
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success" role="alert">
+                        <i class="mdi mdi-check-circle me-2"></i>
+                        <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <h2 class="custom-heading">Welcome Back</h2>
+                <p class="text-muted mb-4">Please sign in to continue</p>
+
                 <form action="login_validate.php" method="POST">
                     <div class="custom-input-container">
-                        <input type="text" class="form-control mb-2" placeholder="Username" name="username" required>
-                        <input type="password" class="form-control" placeholder="Password" name="password" required>
-                        <div class="mb-3 d-flex justify-content-center w-100">
-                            <div class="g-recaptcha" data-sitekey="<?= htmlspecialchars($siteKey) ?>"></div>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="mdi mdi-account"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Username" name="username" required>
                         </div>
+                    </div>
 
+                    <div class="custom-input-container">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="mdi mdi-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        </div>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm"
-                            style="font-size: 1rem;">
-                            <i class="mdi mdi-login me-2"></i> Login
-                        </button>
+                    <div class="mb-3 d-flex justify-content-center w-100">
+                        <div class="g-recaptcha" data-sitekey="<?= htmlspecialchars($siteKey) ?>"></div>
+                    </div>
+
+                    <button type="submit" class="btn custom-login-btn">
+                        <i class="mdi mdi-login me-2"></i> Sign In
+                    </button>
                 </form>
 
                 <div class="text-center mt-4">
-                    <p class="mb-3" style="font-size:13px">Or</p>
-                    <a href="googleAuth/google-login.php"
-                        class="btn btn-light border d-flex align-items-center justify-content-center gap-3 py-2 px-3 shadow-sm"
-                        style="font-weight: 500; transition: background-color 0.3s;">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                            alt="Google Icon" width="22" height="22">
-                        <span>Sign in with Google</span>
+                    <p class="mb-3 text-muted">Or continue with</p>
+                    <a href="googleAuth/google-login.php" class="btn custom-google-btn">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
+                             alt="Google Icon" width="20" height="20">
+                        <span>Google</span>
                     </a>
                 </div>
 
                 <hr class="custom-divider">
-                <p><a href="forgot-password.php">Forgot password?</a></p>
-                <p>Don't have an account? <a href="signup.php">Sign up</a></p>
+
+                <div class="text-center">
+                    <p class="mb-2">
+                        <a href="forgot-password.php" class="text-decoration-none">
+                            <i class="mdi mdi-lock-reset me-1"></i> Forgot password?
+                        </a>
+                    </p>
+                    <p class="mb-0">
+                        Don't have an account? 
+                        <a href="signup.php" class="text-decoration-none">
+                            <i class="mdi mdi-account-plus me-1"></i> Sign up
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

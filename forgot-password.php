@@ -76,136 +76,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Forgot Password</title>
     <meta charset="utf-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f1f1f1;
-            box-sizing: border-box;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card {
-            text-align: center;
-        }
-
-        .card img {
-            width: 80%;
-            max-width: 150px;
-            margin: 20px 0;
-        }
-
-        h3 {
-            color: #4CAF50;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        .input-container {
-            margin-bottom: 20px;
-        }
-
-        .input-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-            transition: border 0.3s ease;
-        }
-
-        .input-container input:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        p {
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .alert {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link href="https://cdn.materialdesignicons.com/7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <div class="card">
-        <img src="assets/images/logo.png" alt="This is the logo">
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger" role="alert">
-                <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+    <div class="container custom-container">
+        <div class="card custom-card">
+            <img src="assets/images/logo.png" alt="Logo" class="custom-logo">
+            <div class="card-body">
+                <h2 class="custom-heading">Forgot Password</h2>
+                <p class="text-muted mb-4">Enter your email to reset your password</p>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <i class="mdi mdi-alert-circle me-2"></i>
+                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success" role="alert">
+                        <i class="mdi mdi-check-circle me-2"></i>
+                        <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                    </div>
+                <?php endif; ?>
+                <form action="forgot-password.php" method="POST">
+                    <div class="custom-input-container">
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="btn custom-login-btn mb-2">
+                        <i class="mdi mdi-email me-2"></i> Send Reset Link
+                    </button>
+                    <p class="mt-3 mb-0"><a href="login.php">Back to Login</a></p>
+                </form>
             </div>
-        <?php endif; ?>
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success" role="alert">
-                <?= $_SESSION['success']; unset($_SESSION['success']); ?>
-            </div>
-        <?php endif; ?>
-        <h3>Enter your email to continue</h3>
-        <form action="forgot-password.php" method="POST">
-            <div class="input-container">
-                <input type="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <button type="submit">Send Code</button>
-            <p>Don't have an account? <a href="signup.php">Sign up</a></p>
-            <p>Already have an account? <a href="login.php">Login</a></p>
-        </form>
+        </div>
     </div>
-</div>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -7,11 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
 
-    <link rel="stylesheet" href="styles/styles.css">
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
 
 </head>
 

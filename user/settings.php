@@ -9,6 +9,7 @@ include '../includes/auth_check.php';
     <title>Settings</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
 <body>
