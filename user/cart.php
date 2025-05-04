@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include '../includes/db.php'; // Ensure this connects to your DB
 include '../includes/auth_check.php';
 // Initialize cart if not set
@@ -79,6 +79,7 @@ $cart = $_SESSION['cart'];
 
     <div class="container mt-5">
         <h2 class="mb-4">🛒 Your Shopping Cart</h2>
+        <p class="text-muted">Note: Minimum of ₱50 to proceed checkout.</p>
         <?php if (empty($cart)): ?>
             <div class="alert alert-info">Your cart is empty.</div>
         <?php else: ?>

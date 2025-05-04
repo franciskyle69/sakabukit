@@ -7,26 +7,27 @@ $dotenv->load();
 
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
-
-
 header('Content-Type: application/json');
 
-$domain = 'http://localhost/saka-bukit/user/'; // Adjust based on your local setup
+$domain = 'http://localhost/saka-bukit/user/';
+
+$lineItems = [];
+
+foreach ($_SESSION['cart'] as $item) {
+    $lineItems[] = [
+        'price_data' => [
+            'currency' => 'php',
+            'product_data' => ['name' => $item['name']],
+            'unit_amount' => intval($item['price'] * 100),
+        ],
+        'quantity' => $item['quantity'],
+    ];
+}
 
 $session = \Stripe\Checkout\Session::create([
     'payment_method_types' => ['card'],
-    'line_items' => [
-        [
-            'price_data' => [
-                'currency' => 'usd', // ✅ peso
-                'product_data' => ['name' => $item['name']],
-                'unit_amount' => intval($item['price'] * 100), // ✅ convert ₱ to centavos
-            ],
-
-            'quantity' => 'product_quantity',
-        ]
-    ],
-    'mode' => 'payment', // ✅ payment
+    'line_items' => $lineItems,
+    'mode' => 'payment',
     'success_url' => $domain . 'checkout_success.php',
     'cancel_url' => $domain . 'cancel.html',
 ]);

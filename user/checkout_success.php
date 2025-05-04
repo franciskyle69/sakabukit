@@ -1,11 +1,41 @@
 <?php
 include '../includes/auth_check.php';
-if (!isset($_GET['order_id'])) {
+include '../includes/db.php';
+
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     header('Location: products.php');
     exit();
 }
-$orderId = intval($_GET['order_id']);
+
+$cart = $_SESSION['cart'];
+$total = 0;
+foreach ($cart as $item) {
+    $total += $item['price'] * $item['quantity'];
+}
+
+// Save to orders table
+$stmt = $conn->prepare("INSERT INTO orders (order_date, total_amount) VALUES (NOW(), ?)");
+$stmt->bind_param("d", $total);
+$stmt->execute();
+$orderId = $conn->insert_id;
+
+// Save to order_items table
+$stmtItem = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+                            VALUES (?, ?, ?, ?, ?)");
+foreach ($cart as $id => $item) {
+    $productId = $id;
+    $productName = $item['name'];
+    $quantity = $item['quantity'];
+    $price = $item['price'];
+
+    $stmtItem->bind_param("iisid", $orderId, $productId, $productName, $quantity, $price);
+    $stmtItem->execute();
+}
+
+// Clear cart
+unset($_SESSION['cart']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

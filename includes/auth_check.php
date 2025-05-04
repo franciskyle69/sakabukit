@@ -1,7 +1,7 @@
 <?php
-
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // If no role is set, treat as guest
 if (!isset($_SESSION['role'])) {
     $_SESSION['role'] = 'guest';
@@ -27,7 +27,7 @@ $current_file = basename($_SERVER['PHP_SELF']);
 
 // Redirect guests if accessing a restricted page
 if ($role === 'guest' && !in_array($current_file, $guest_allowed)) {
-    header("Location: ../user/index.php");
+    header("Location: /user/index.php");
     exit();
 }
 

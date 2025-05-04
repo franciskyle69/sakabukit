@@ -1,78 +1,55 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include '../includes/auth_check.php';
+include '../includes/db.php'; // For future use, if needed
 
-include '../includes/db.php'; // Your DB connection
-
-// Stripe autoload
 require '../vendor/autoload.php';
-\Stripe\Stripe::setApiKey('sk_test_51RIWM7RjyqcssAnfRpGi7pwbUGHnPsChxCEHAGbU2pkKmOu5gH8Bg4Lw48ehAFKx7y1OsE6cfyyFYmFjfZxIQSWb00svcOQe8n'); // Replace with your secret key
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+\Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
-// Check if cart is available
+// Check if cart exists
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     header('Location: cart.php');
     exit();
 }
 
 $cart = $_SESSION['cart'];
-$total = 0;
+
+// Stripe line items format
+$lineItems = [];
 foreach ($cart as $item) {
-    $total += $item['price'] * $item['quantity'];
+    $lineItems[] = [
+        'price_data' => [
+            'currency' => 'php',
+            'product_data' => ['name' => $item['name']],
+            'unit_amount' => intval($item['price'] * 100), // price in cents
+        ],
+        'quantity' => $item['quantity'],
+    ];
 }
 
-// Handle Stripe checkout session via AJAX
+// Handle AJAX request to create Stripe checkout session
 if (
     $_SERVER['REQUEST_METHOD'] === 'POST' &&
     isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
 ) {
-
     try {
-        // Save to orders table
-        $stmt = $conn->prepare("INSERT INTO orders (order_date, total_amount) VALUES (NOW(), ?)");
-        $stmt->bind_param("d", $total);
-        $stmt->execute();
-        $orderId = $conn->insert_id;
+        $domain = 'http://localhost/saka-bukit/user/'; // change to your domain if live
 
-        // Save to order_items table
-        $stmtItem = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
-                                    VALUES (?, ?, ?, ?, ?)");
-
-        foreach ($cart as $id => $item) {
-            $productId = $id;
-            $productName = $item['name'];
-            $quantity = $item['quantity'];
-            $price = $item['price'];
-
-            $stmtItem->bind_param("iisid", $orderId, $productId, $productName, $quantity, $price);
-            $stmtItem->execute();
-        }
-
-        // Stripe line items
-        $lineItems = [];
-        foreach ($cart as $item) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'php',
-                    'product_data' => ['name' => $item['name']],
-                    'unit_amount' => intval($item['price'] * 100), // Must be integer like 15000 for ₱150.00
-                ],
-                'quantity' => $item['quantity'],
-            ];
-        }
-
-        $domain = 'http://localhost/saka-bukit/user/';
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => $domain . 'checkout_success.php?order_id=' . $orderId,
+            'success_url' => $domain . 'checkout_success.php',
             'cancel_url' => $domain . 'cancel.html',
         ]);
 
-        // Clear cart after starting checkout
-        unset($_SESSION['cart']);
-
-        // Return session ID for redirect
+        // Return the session ID to redirect
         header('Content-Type: application/json');
         echo json_encode(['id' => $session->id]);
         exit();
@@ -83,7 +60,6 @@ if (
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,6 +73,7 @@ if (
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             background: #f8f9fa;
@@ -136,7 +113,7 @@ if (
     </div>
 
     <script>
-        const stripe = Stripe('pk_test_51RIWM7RjyqcssAnfwSGl47TM3WJFfhXzOcgr0JToNpYc5vHJUr8TbClisgXVVfAbS3ZQpuM3aF5XvNaVrxu4Ad1G008WZbcb7X');
+        const stripe = Stripe('<?= $_ENV['STRIPE_PUBLISHABLE_KEY'] ?>'); // set in your .env
 
         document.getElementById('checkout-button').addEventListener('click', function () {
             fetch('checkout.php', {
@@ -152,6 +129,7 @@ if (
                     alert('Something went wrong. Please try again.');
                 });
         });
+
     </script>
 </body>
 
