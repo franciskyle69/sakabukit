@@ -14,7 +14,7 @@ $role = $_SESSION['role'] ?? 'guest';
       position: sticky;
       top: 0;
       z-index: 1030;
-      background-color: rgb(54, 91, 12);
+      background-color: #051922;
     }
   </style>
 </head>
