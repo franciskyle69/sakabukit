@@ -81,11 +81,28 @@
 <body>
     <div  style="" > <?php include '../includes/navbar.php'; ?> </div>
 
-   
+    <div class="hero-area hero-bg">
+        <div class="container">
+            <div class="row justify-content-center align-items-center" style="height: 100%;">
+                <div class="col-lg-9 text-center">
+                    <div class="hero-text">
+                        <div class="hero-text-tablecell">
+                            <p class="subtitle">SAKA BUK-IT</p>
+                            <h1>Explore more, Worry Less</h1>
+                            <div class="hero-btns">
+                                <a href="products.php" class="boxed-btn">Gear Collection</a>
+                                <a href="bookings.php" class="bordered-btn">Book With Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
 
-    <main class="container mt-4 mb-5">
-        <div class="content p-4">
+    <main class="container mt-3 mb-4">
+        <div class="content p-5">
             <?php if ($role === 'user'): ?>
                 <p>Welcome <?= htmlspecialchars($_SESSION['full_name'] ?? '') ?>!</p>
             <?php else: ?>
@@ -95,6 +112,8 @@
             <p class="text-muted">Your partner in the mountain!</p>
             <br>
 
+            
+
             <div class="row">
                 <!-- First Video -->
                 <div class="col-md-6 mb-4">
@@ -103,7 +122,7 @@
                         <div class="card-body d-flex justify-content-center">
                             <div class="video-wrapper" data-title="Kulago"
                                 data-description="Discover the peaceful beauty of Mount Kulago, where every step brings you closer to nature's calm and endless adventure.">
-                                <video class="w-100" style="max-height: 400px; object-fit: cover;">
+                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
                                     <source src="../assets/videos/promote.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -121,7 +140,7 @@
                         <div class="card-body d-flex justify-content-center">
                             <div class="video-wrapper" data-title="Holon"
                                 data-description="Journey to the breathtaking Lake Holon, hidden in the heart of the mountains — a perfect escape for your soul and spirit.">
-                                <video class="w-100" style="max-height: 400px; object-fit: cover;">
+                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
                                     <source src="../assets/videos/holon.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -132,6 +151,18 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                document.querySelectorAll('.video-hover').forEach(video => {
+                    video.addEventListener('mouseenter', () => {
+                        video.play();
+                    });
+                    video.addEventListener('mouseleave', () => {
+                        video.pause();
+                        video.currentTime = 0;
+                    });
+                });
+            </script>
 
         </div>
     </main>
