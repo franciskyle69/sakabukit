@@ -1,4 +1,5 @@
 <?php include '../includes/auth_check.php'; ?>
+<?php include '../includes/db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,31 +37,28 @@
                                         <!-- Username Field -->
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">Username</span>
-                                            <input type="text" name="username" class="form-control"
-                                                placeholder="Enter username" required>
+                                            <input type="text" name="username" class="form-control" value="<?= htmlspecialchars($user['username'] ?? '') ?>" required>
                                         </div>
-
-                                        <!-- Email Field -->
+                                        <!-- First Name Field -->
                                         <div class="input-group mb-3">
-                                            <span class="input-group-text">Email</span>
-                                            <input type="email" name="email" class="form-control"
-                                                placeholder="Enter email" required>
+                                            <span class="input-group-text">First Name</span>
+                                            <input type="text" name="firstname" class="form-control" value="<?= htmlspecialchars($user['firstname'] ?? '') ?>" required>
                                         </div>
-
+                                        <!-- Last Name Field -->
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Last Name</span>
+                                            <input type="text" name="lastname" class="form-control" value="<?= htmlspecialchars($user['lastname'] ?? '') ?>" required>
+                                        </div>
                                         <!-- Password Field -->
                                         <div class="input-group mb-3">
-                                            <span class="input-group-text">Password</span>
-                                            <input type="password" name="password" class="form-control"
-                                                placeholder="Enter password" required>
+                                            <span class="input-group-text">New Password</span>
+                                            <input type="password" name="password" class="form-control" placeholder="Enter new password (leave blank to keep current)">
                                         </div>
-
                                         <!-- Confirm Password Field -->
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">Confirm Password</span>
-                                            <input type="password" name="confirm_password" class="form-control"
-                                                placeholder="Confirm password" required>
+                                            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm new password">
                                         </div>
-
                                         <!-- Submit Button -->
                                         <button type="submit" class="btn btn-primary w-100">Update Profile</button>
                                     </form>

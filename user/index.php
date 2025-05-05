@@ -75,6 +75,15 @@
             max-height: 70%;
             border-radius: 10px;
         }
+
+        .single-logo-item img {
+            transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s cubic-bezier(.4,2,.6,1);
+        }
+        .single-logo-item img:hover {
+            transform: scale(1.15) rotate(-2deg);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            z-index: 2;
+        }
     </style>
 </head>
 
@@ -229,16 +238,24 @@
                 <div class="col-lg-12">
                     <div class="logo-carousel-inner d-flex justify-content-between align-items-center">
                         <div class="single-logo-item">
-                            <img src="../assets/img/company-logos/iT.jpg" alt="">
+                            <a href="https://www.facebook.com/iTREKKERSph" target="_blank">
+                                <img src="../assets/img/company-logos/iT.jpg"style="border-radius: 50%;" alt="">
+                            </a>
                         </div>
                         <div class="single-logo-item">
-                            <img src="../assets/img/company-logos/logo.jpg" alt="">
+                            <a href="https://www.facebook.com/profile.php?id=61561342811020" target="_blank">
+                                <img src="../assets/img/company-logos/logo.jpg" style="border-radius: 50%;" alt="">
+                            </a>
                         </div>
                         <div class="single-logo-item">
-                            <img src="../assets/img/company-logos/EXP.jpg" alt="">
+                            <a href="https://www.facebook.com/AngtadmountaineersMountainTrip" target="_blank">
+                                <img src="../assets/img/company-logos/EXP.jpg" style="border-radius: 50%;" alt="">
+                            </a>
                         </div>
-                        <div class="single-logo-item">
-                            <img src="../assets/img/company-logos/PB.jpg" alt="">
+                        <div class="single-logo-item"">
+                            <a href="https://www.facebook.com/profile.php?id=61563526834293" target="_blank">
+                                <img src="../assets/img/company-logos/PB.jpg"  style="border-radius: 50%;" alt="">
+                            </a>
                         </div>
                         <!-- <div class="single-logo-item">
                             <img src="assets/img/company-logos/5.png" alt="">

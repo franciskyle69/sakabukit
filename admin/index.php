@@ -1,6 +1,35 @@
 <?php
 include '../includes/navbar.php';
+include '../includes/db.php';
 
+// Handle status update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST['action'])) {
+    $booking_id = $_POST['booking_id'];
+    $action = $_POST['action'];
+    if ($action === 'accept') {
+        $new_status = 'confirmed';
+    } elseif ($action === 'reject') {
+        $new_status = 'cancelled';
+    } else {
+        // Invalid action, do not update
+        header('Location: index.php');
+        exit();
+    }
+    $stmt = $pdo->prepare("UPDATE bookings SET status = ? WHERE id = ?");
+    $stmt->execute([$new_status, $booking_id]);
+    header('Location: index.php');
+    exit();
+}
+
+// Fetch bookings by status
+function getBookingsByStatus($pdo, $status) {
+    $stmt = $pdo->prepare("SELECT b.*, u.firstname, u.lastname FROM bookings b LEFT JOIN users u ON b.user_id = u.id WHERE b.status = ? ORDER BY b.created_at DESC");
+    $stmt->execute([$status]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+$pendingBookings = getBookingsByStatus($pdo, 'pending');
+$acceptedBookings = getBookingsByStatus($pdo, 'confirmed');
+$rejectedBookings = getBookingsByStatus($pdo, 'cancelled');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +46,13 @@ include '../includes/navbar.php';
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     <!-- Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     <style>
         body {
@@ -85,10 +118,127 @@ include '../includes/navbar.php';
             </div>
             <!-- End of Dashboard Cards -->
 
-            <!-- Print Button -->
-
+            <!-- Bookings Tables -->
+            <div class="mt-5">
+                <h2>Pending Bookings</h2>
+                <table id="pendingTable" class="table table-bordered table-hover">
+                    <thead class="table-warning">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Destination</th>
+                            <th>Date</th>
+                            <th>Participants</th>
+                            <th>Package</th>
+                            <th>Special Requests</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($pendingBookings as $b): ?>
+                        <tr>
+                            <td><?= $b['id'] ?></td>
+                            <td><?= htmlspecialchars(($b['firstname'] ?? '') . ' ' . ($b['lastname'] ?? '')) ?></td>
+                            <td><?= htmlspecialchars($b['destination']) ?></td>
+                            <td><?= htmlspecialchars($b['date']) ?></td>
+                            <td><?= htmlspecialchars($b['participants']) ?></td>
+                            <td><?= htmlspecialchars($b['package']) ?></td>
+                            <td><?= htmlspecialchars($b['special_requests']) ?></td>
+                            <td><span class="badge bg-warning text-dark">Pending</span></td>
+                            <td><?= htmlspecialchars($b['created_at']) ?></td>
+                            <td>
+                                <form method="POST" class="d-inline">
+                                    <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
+                                    <button type="submit" name="action" value="accept" class="btn btn-success btn-sm mb-1">Accept</button>
+                                </form>
+                                <form method="POST" class="d-inline">
+                                    <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
+                                    <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-5">
+                <h2>Accepted Bookings</h2>
+                <table id="acceptedTable" class="table table-bordered table-hover">
+                    <thead class="table-success">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Destination</th>
+                            <th>Date</th>
+                            <th>Participants</th>
+                            <th>Package</th>
+                            <th>Special Requests</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($acceptedBookings as $b): ?>
+                        <tr>
+                            <td><?= $b['id'] ?></td>
+                            <td><?= htmlspecialchars(($b['firstname'] ?? '') . ' ' . ($b['lastname'] ?? '')) ?></td>
+                            <td><?= htmlspecialchars($b['destination']) ?></td>
+                            <td><?= htmlspecialchars($b['date']) ?></td>
+                            <td><?= htmlspecialchars($b['participants']) ?></td>
+                            <td><?= htmlspecialchars($b['package']) ?></td>
+                            <td><?= htmlspecialchars($b['special_requests']) ?></td>
+                            <td><span class="badge bg-success">Confirmed</span></td>
+                            <td><?= htmlspecialchars($b['created_at']) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-5">
+                <h2>Rejected Bookings</h2>
+                <table id="rejectedTable" class="table table-bordered table-hover">
+                    <thead class="table-danger">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Destination</th>
+                            <th>Date</th>
+                            <th>Participants</th>
+                            <th>Package</th>
+                            <th>Special Requests</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($rejectedBookings as $b): ?>
+                        <tr>
+                            <td><?= $b['id'] ?></td>
+                            <td><?= htmlspecialchars(($b['firstname'] ?? '') . ' ' . ($b['lastname'] ?? '')) ?></td>
+                            <td><?= htmlspecialchars($b['destination']) ?></td>
+                            <td><?= htmlspecialchars($b['date']) ?></td>
+                            <td><?= htmlspecialchars($b['participants']) ?></td>
+                            <td><?= htmlspecialchars($b['package']) ?></td>
+                            <td><?= htmlspecialchars($b['special_requests']) ?></td>
+                            <td><span class="badge bg-danger">Cancelled</span></td>
+                            <td><?= htmlspecialchars($b['created_at']) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#pendingTable').DataTable();
+            $('#acceptedTable').DataTable();
+            $('#rejectedTable').DataTable();
+        });
+    </script>
 
 </body>
 
