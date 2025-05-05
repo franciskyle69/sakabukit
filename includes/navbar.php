@@ -21,7 +21,7 @@ $role = $_SESSION['role'] ?? 'guest';
 
 <nav class="navbar navbar-expand-lg navbar-dark px-4 py-2 shadow-sm">
   <a class="navbar-brand d-flex align-items-center text-white fw-bold" href="#">
-    <img src="../assets/images/logo.png" alt="This is the logo"
+    <img src="../assets/img/logos.png" alt="This is the logo"
       style="width: 60px; height: 60px; display: block; margin: 0 auto;">
     SAKA BUKIT
   </a>
