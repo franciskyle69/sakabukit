@@ -2,38 +2,49 @@
 include '../includes/auth_check.php';
 include '../includes/db.php';
 
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+$user_id = $_SESSION['user_id'];
+
+// Get cart items for the order
+$stmt = $pdo->prepare("
+    SELECT c.*, p.name, p.price 
+    FROM cart_items c 
+    JOIN products p ON c.product_id = p.id 
+    WHERE c.user_id = ?
+");
+$stmt->execute([$user_id]);
+$cart_items = $stmt->fetchAll();
+
+if (empty($cart_items)) {
     header('Location: products.php');
     exit();
 }
 
-$cart = $_SESSION['cart'];
+// Calculate total
 $total = 0;
-foreach ($cart as $item) {
+foreach ($cart_items as $item) {
     $total += $item['price'] * $item['quantity'];
 }
 
 // Save to orders table
-$stmt = $conn->prepare("INSERT INTO orders (order_date, total_amount) VALUES (NOW(), ?)");
-$stmt->bind_param("d", $total);
-$stmt->execute();
-$orderId = $conn->insert_id;
+$stmt = $pdo->prepare("INSERT INTO orders (user_id, order_date, total_amount) VALUES (?, NOW(), ?)");
+$stmt->execute([$user_id, $total]);
+$orderId = $pdo->lastInsertId();
 
 // Save to order_items table
-$stmtItem = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
-                            VALUES (?, ?, ?, ?, ?)");
-foreach ($cart as $id => $item) {
-    $productId = $id;
-    $productName = $item['name'];
-    $quantity = $item['quantity'];
-    $price = $item['price'];
-
-    $stmtItem->bind_param("iisid", $orderId, $productId, $productName, $quantity, $price);
-    $stmtItem->execute();
+$stmtItem = $pdo->prepare("INSERT INTO order_items (order_id, product_id, product_name, quantity, price) VALUES (?, ?, ?, ?, ?)");
+foreach ($cart_items as $item) {
+    $stmtItem->execute([
+        $orderId,
+        $item['product_id'],
+        $item['name'],
+        $item['quantity'],
+        $item['price']
+    ]);
 }
 
-// Clear cart
-unset($_SESSION['cart']);
+// Clear cart from database
+$stmt = $pdo->prepare("DELETE FROM cart_items WHERE user_id = ?");
+$stmt->execute([$user_id]);
 ?>
 
 <!DOCTYPE html>

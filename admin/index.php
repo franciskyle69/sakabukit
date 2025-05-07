@@ -6,6 +6,8 @@ include '../includes/db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST['action'])) {
     $booking_id = $_POST['booking_id'];
     $action = $_POST['action'];
+    $admin_id = $_SESSION['user_id']; // Get the admin's ID
+
     if ($action === 'accept') {
         $new_status = 'confirmed';
     } elseif ($action === 'reject') {
@@ -15,15 +17,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST[
         header('Location: index.php');
         exit();
     }
-    $stmt = $pdo->prepare("UPDATE bookings SET status = ? WHERE id = ?");
-    $stmt->execute([$new_status, $booking_id]);
+    $stmt = $pdo->prepare("UPDATE bookings SET status = ?, admin_id = ? WHERE id = ?");
+    $stmt->execute([$new_status, $admin_id, $booking_id]);
     header('Location: index.php');
     exit();
 }
 
 // Fetch bookings by status
 function getBookingsByStatus($pdo, $status) {
-    $stmt = $pdo->prepare("SELECT b.*, u.firstname, u.lastname FROM bookings b LEFT JOIN users u ON b.user_id = u.id WHERE b.status = ? ORDER BY b.created_at DESC");
+    $stmt = $pdo->prepare("
+        SELECT b.*, u.firstname, u.lastname, 
+               a.firstname as admin_firstname, a.lastname as admin_lastname 
+        FROM bookings b 
+        LEFT JOIN users u ON b.user_id = u.id 
+        LEFT JOIN users a ON b.admin_id = a.id 
+        WHERE b.status = ? 
+        ORDER BY b.created_at DESC
+    ");
     $stmt->execute([$status]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -176,6 +186,7 @@ $rejectedBookings = getBookingsByStatus($pdo, 'cancelled');
                             <th>Package</th>
                             <th>Special Requests</th>
                             <th>Status</th>
+                            <th>Handled By</th>
                             <th>Created At</th>
                         </tr>
                     </thead>
@@ -190,6 +201,7 @@ $rejectedBookings = getBookingsByStatus($pdo, 'cancelled');
                             <td><?= htmlspecialchars($b['package']) ?></td>
                             <td><?= htmlspecialchars($b['special_requests']) ?></td>
                             <td><span class="badge bg-success">Confirmed</span></td>
+                            <td><?= htmlspecialchars(($b['admin_firstname'] ?? '') . ' ' . ($b['admin_lastname'] ?? '')) ?></td>
                             <td><?= htmlspecialchars($b['created_at']) ?></td>
                         </tr>
                         <?php endforeach; ?>
@@ -209,6 +221,7 @@ $rejectedBookings = getBookingsByStatus($pdo, 'cancelled');
                             <th>Package</th>
                             <th>Special Requests</th>
                             <th>Status</th>
+                            <th>Handled By</th>
                             <th>Created At</th>
                         </tr>
                     </thead>
@@ -223,6 +236,7 @@ $rejectedBookings = getBookingsByStatus($pdo, 'cancelled');
                             <td><?= htmlspecialchars($b['package']) ?></td>
                             <td><?= htmlspecialchars($b['special_requests']) ?></td>
                             <td><span class="badge bg-danger">Cancelled</span></td>
+                            <td><?= htmlspecialchars(($b['admin_firstname'] ?? '') . ' ' . ($b['admin_lastname'] ?? '')) ?></td>
                             <td><?= htmlspecialchars($b['created_at']) ?></td>
                         </tr>
                         <?php endforeach; ?>

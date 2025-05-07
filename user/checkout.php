@@ -4,24 +4,33 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include '../includes/auth_check.php';
-include '../includes/db.php'; // For future use, if needed
+include '../includes/db.php';
 
 require '../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
-// Check if cart exists
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+// Get cart items from database
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("
+    SELECT c.*, p.name, p.price 
+    FROM cart_items c 
+    JOIN products p ON c.product_id = p.id 
+    WHERE c.user_id = ?
+");
+$stmt->execute([$user_id]);
+$cart_items = $stmt->fetchAll();
+
+// Check if cart is empty
+if (empty($cart_items)) {
     header('Location: cart.php');
     exit();
 }
 
-$cart = $_SESSION['cart'];
-
 // Stripe line items format
 $lineItems = [];
-foreach ($cart as $item) {
+foreach ($cart_items as $item) {
     $lineItems[] = [
         'price_data' => [
             'currency' => 'php',
@@ -65,56 +74,65 @@ if (
 
 <head>
     <meta charset="UTF-8">
-    <title>Checkout | Stripe</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Stripe JS -->
+    <title>Checkout</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <script src="https://js.stripe.com/v3/"></script>
-
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .checkout-container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .checkout-container h2 {
-            margin-bottom: 20px;
-        }
-
-        .btn-pay {
-            font-size: 1.2rem;
-            padding: 12px 25px;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="checkout-container">
-        <img src="https://stripe.com/img/v3/newsroom/social.png" alt="Stripe" class="img-fluid mb-4" width="120">
-        <h2>Complete Your Payment</h2>
-        <p class="mb-4">Secure checkout powered by Stripe</p>
-        <button id="checkout-button" class="btn btn-primary btn-pay w-100">Pay Now</button>
+    <div class="container mt-5">
+        <h2 class="mb-4">Checkout</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order Summary</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $total = 0;
+                                foreach ($cart_items as $item): 
+                                    $subtotal = $item['price'] * $item['quantity'];
+                                    $total += $subtotal;
+                                ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($item['name']) ?></td>
+                                    <td><?= $item['quantity'] ?></td>
+                                    <td>₱<?= number_format($item['price'], 2) ?></td>
+                                    <td>₱<?= number_format($subtotal, 2) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                                <tr class="table-secondary">
+                                    <td colspan="3" class="text-end"><strong>Total</strong></td>
+                                    <td><strong>₱<?= number_format($total, 2) ?></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Payment</h5>
+                        <p class="card-text">Click the button below to proceed with payment.</p>
+                        <button id="checkout-button" class="btn btn-primary w-100">Proceed to Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const stripe = Stripe('<?= $_ENV['STRIPE_PUBLISHABLE_KEY'] ?>'); // set in your .env
-
+        var stripe = Stripe('<?= $_ENV['STRIPE_PUBLISHABLE_KEY'] ?>');
         document.getElementById('checkout-button').addEventListener('click', function () {
             fetch('checkout.php', {
                 method: 'POST',
@@ -122,14 +140,13 @@ if (
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-                .then(response => response.json())
-                .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Something went wrong. Please try again.');
-                });
+            .then(response => response.json())
+            .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            });
         });
-
     </script>
 </body>
 
