@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../styles/styles.css">
     
 
-    <link rel="shortcut icon" type="image/png" href="assets/img/unsa.png">
+   
 	<!-- google font -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
@@ -88,6 +88,10 @@
 </head>
 
 <body>
+
+    
+
+
     <div  style="" > <?php include '../includes/navbar.php'; ?> </div>
 
     <div class="hero-area hero-bg">
@@ -110,71 +114,7 @@
     </div>
     
 
-    <main class="container mt-3 mb-4">
-        <div class="content p-5">
-            <?php if ($role === 'user'): ?>
-                <p>Welcome <?= htmlspecialchars($_SESSION['full_name'] ?? '') ?>!</p>
-            <?php else: ?>
-                <p>Welcome, Guest!</p>
-                <a href="../login.php">Login</a> or <a href="../signup.php">Sign up</a>
-            <?php endif; ?>
-            <p class="text-muted">Your partner in the mountain!</p>
-            <br>
-
-            
-
-            <div class="row">
-                <!-- First Video -->
-                <div class="col-md-6 mb-4">
-                    <div class="card product-card text-center">
-                        <h5 class="card-title mt-3">Kulago</h5>
-                        <div class="card-body d-flex justify-content-center">
-                            <div class="video-wrapper" data-title="Kulago"
-                                data-description="Discover the peaceful beauty of Mount Kulago, where every step brings you closer to nature's calm and endless adventure.">
-                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
-                                    <source src="../assets/videos/promote.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </div>
-                        <p class="text-muted">Discover the peaceful beauty of Mount Kulago, where every step brings you
-                            closer to nature's calm and endless adventure.</p>
-                    </div>
-                </div>
-
-                <!-- Second Video -->
-                <div class="col-md-6 mb-4">
-                    <div class="card product-card text-center">
-                        <h5 class="card-title mt-3">Holon</h5>
-                        <div class="card-body d-flex justify-content-center">
-                            <div class="video-wrapper" data-title="Holon"
-                                data-description="Journey to the breathtaking Lake Holon, hidden in the heart of the mountains — a perfect escape for your soul and spirit.">
-                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
-                                    <source src="../assets/videos/holon.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </div>
-                        <p class="text-muted">Journey to the breathtaking Lake Holon, hidden in the heart of the
-                            mountains — a perfect escape for your soul and spirit.</p>
-                    </div>
-                </div>
-            </div>
-
-            <script>
-                document.querySelectorAll('.video-hover').forEach(video => {
-                    video.addEventListener('mouseenter', () => {
-                        video.play();
-                    });
-                    video.addEventListener('mouseleave', () => {
-                        video.pause();
-                        video.currentTime = 0;
-                    });
-                });
-            </script>
-
-        </div>
-    </main>
+    
     <!-- products -->
     <div class="product-section mt-150 mb-150">
         <div class="container">
@@ -226,6 +166,109 @@
             </div>
         </div>
     </div>
+   
+
+    <div class="d-flex justify-content-center align-items-center my-5" >
+        <div class="row" style="width: 100%; max-width: 1500px;">
+            <!-- Card Content -->
+            <div class="col-md-4" style="margin-left: px;">
+                <div class="card" style="height: 600px;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h3 class="card-title">MT.KULAGO</h3>
+                            <p class="card-text" style="text-align: justify; line-height: 1.5;">Mt. Kulago is located in Impasugong, Bukidnon. Famous for its scenic grassland, 
+                                river trekking, and its open trail that truly encapsulates the beauty of the landscape of Bukidnon.
+                                Mt. Kulago has an elevation of approximately 913 meters above sea level (MASL) with 6/­9 difficulty and 1-3 class of trail.</p>
+                                <p>INCLUSIONS:</p>
+                                <p>☑️ Registration Fee</p>
+                                <p>☑️ Guide fee</p>
+                                <p>☑️ Local fee & community fee</p>
+                                <p>☑️ 2 hosted meals (dinner & breakfast)</p>
+                                <p>☑️ Roundtrip Transportation (Dvo-Bukidnon v.v)</p>
+                                <p>☑️ Ground Rental fee</p>
+                                <p>☑️ Souviner sticker</p>
+
+                        </div>
+                        <a href="bookings.php" class="btn btn-primary mt-3">Book Your Adventure</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Video Frame -->
+            <div class="col-md-8">
+                <div class="embed-responsive embed-responsive-16by9" style="width: 100%; height: 600px;">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/TFXkecXJXZE" allowfullscreen style="width: 100%; height: 100%;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <main class="container mt-3 mb-4">
+        <div class="content p-5">
+            <?php if ($role === 'user'): ?>
+                <p>Welcome <?= htmlspecialchars($_SESSION['full_name'] ?? '') ?>!</p>
+            <?php else: ?>
+                <p>Welcome, Guest!</p>
+                <a href="../login.php">Login</a> or <a href="../signup.php">Sign up</a>
+            <?php endif; ?>
+            <p class="text-muted">Your partner in the mountain!</p>
+            <br>
+
+            <!-- video start -->
+
+            <div class="row">
+                <!-- First Video -->
+                <div class="col-md-6 mb-4">
+                    <div class="card product-card text-center">
+                        <h5 class="card-title mt-3">Kulago</h5>
+                        <div class="card-body d-flex justify-content-center">
+                            <div class="video-wrapper" data-title="Kulago"
+                                data-description="Discover the peaceful beauty of Mount Kulago, where every step brings you closer to nature's calm and endless adventure.">
+                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
+                                    <source src="../assets/videos/promote.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                        <p class="text-muted">Discover the peaceful beauty of Mount Kulago, where every step brings you
+                            closer to nature's calm and endless adventure.</p>
+                    </div>
+                </div>
+
+                <!-- Second Video -->
+                <div class="col-md-6 mb-4">
+                    <div class="card product-card text-center">
+                        <h5 class="card-title mt-3">Holon</h5>
+                        <div class="card-body d-flex justify-content-center">
+                            <div class="video-wrapper" data-title="Holon"
+                                data-description="Journey to the breathtaking Lake Holon, hidden in the heart of the mountains — a perfect escape for your soul and spirit.">
+                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
+                                    <source src="../assets/videos/holon.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                        <p class="text-muted">Journey to the breathtaking Lake Holon, hidden in the heart of the
+                            mountains — a perfect escape for your soul and spirit.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- video end -->
+
+            <script>
+                document.querySelectorAll('.video-hover').forEach(video => {
+                    video.addEventListener('mouseenter', () => {
+                        video.play();
+                    });
+                    video.addEventListener('mouseleave', () => {
+                        video.pause();
+                        video.currentTime = 0;
+                    });
+                });
+            </script>
+
+        </div>
+    </main>
 
     <div style="display: flex; justify-content: center; align-items: center;">
 		<h1>Tour Organizer/Guides</h1>
@@ -281,15 +324,15 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box about-widget">
 						<h2 class="widget-title">About us</h2>
-						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+						<p>Saka Bukit is your trusted destination for eCommerce and booking services. We offer a seamless shopping experience and easy reservations for various services. Our platform combines convenience, quality, and reliability to serve individuals and businesses across the region. Shop and book with confidence at Saka Bukit.</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box get-in-touch">
 						<h2 class="widget-title">Get in Touch</h2>
 						<ul>
-							<li>34/8, East Hukupara, Gifirtok, Sadan.</li>
-							<li>support@fruitkha.com</li>
+							<li> Fortich Street, Barangay 3, Malaybalay City, Bukidnon</li>
+							<li>support@sakabukit.com</li>
 							<li>+00 111 222 3333</li>
 						</ul>
 					</div>
@@ -299,9 +342,13 @@
 					<div class="footer-box subscribe">
 						<h2 class="widget-title">Subscribe</h2>
 						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.html">
-							<input type="email" placeholder="Email">
-							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						<form action="#">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="email" placeholder="Email" style="flex: 1; height: 40px; padding: 0 10px;">
+                                <button type="submit" style="height: 40px; display: flex; align-items: center; justify-content: center; padding: 0 15px;">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
 						</form>
 					</div>
 				</div>
@@ -309,7 +356,7 @@
 		</div>
 	</div>
         <div class="container text-center mt-5">
-            <p class="mb-0">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
+            <p class="mb-0" style="color: orange;">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
             <small>Climb mountains not so the world can see you, but so you can see the world.</small>
         </div>
     </footer>
@@ -347,6 +394,7 @@
             }
         });
     </script>
+    
 
 </body>
 

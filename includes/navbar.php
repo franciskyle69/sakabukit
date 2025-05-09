@@ -1,3 +1,23 @@
+<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="assets/css/responsive.css">
 <?php
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
@@ -19,11 +39,12 @@ $role = $_SESSION['role'] ?? 'guest';
   </style>
 </head>
 
+
 <nav class="navbar navbar-expand-lg navbar-dark px-4 py-2 shadow-sm">
-  <a class="navbar-brand d-flex align-items-center text-white fw-bold" href="#">
-    <img src="../assets/img/logos.png" alt="This is the logo"
-      style="width: 60px; height: 60px; display: block; margin: 0 auto;">
-    SAKA BUKIT
+  <a class="navbar-brand d-flex align-items-center text-white fw-bold" href="index.php">
+    <img src="../assets/img/SAKA_BUK_it-removebg-preview.png" alt="This is the logo"
+      style="width: 150px; height: 50px; display: block; margin-left: 200px;">
+    <!-- SAKA BUKIT -->
   </a>
 
   <?php if ($role !== 'guest'): ?>
@@ -32,7 +53,7 @@ $role = $_SESSION['role'] ?? 'guest';
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
         <li class="nav-item">
           <a class="nav-link text-white"
             href="<?= $role === 'admin' ? '../admin/index.php' : '../user/index.php' ?>">Home</a>

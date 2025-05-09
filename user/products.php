@@ -1,3 +1,5 @@
+
+
 <?php
 include '../includes/db.php';
 include '../includes/auth_check.php';
@@ -13,6 +15,30 @@ include '../includes/auth_check.php';
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../styles/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+
+  
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="assets/css/responsive.css">
+
   <link rel="icon" type="image/png" href="../assets/images/logo.png">
 
   <style>
@@ -124,10 +150,10 @@ include '../includes/auth_check.php';
   </main>
 
   <footer class="text-center">
-    <div class="container">
-      <p class="mb-0">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
-      <small>Climb mountains not so the world can see you, but so you can see the world.</small>
-    </div>
+  <div class="container text-center mt-5">
+            <p class="mb-0" style="color: orange;">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
+            <small>Climb mountains not so the world can see you, but so you can see the world.</small>
+        </div>
   </footer>
 
 </body>

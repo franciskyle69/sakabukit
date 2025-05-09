@@ -1,3 +1,26 @@
+<!-- favicon -->
+<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="../assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="../assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="../assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="../assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="../assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+
 <?php
 
 include '../includes/db.php'; // Ensure this connects to your DB
@@ -99,69 +122,123 @@ $cart_items = $stmt->fetchAll();
 </head>
 
 <body>
+<div  style="" > <?php include '../includes/navbar.php'; ?> </div>
 
-    <div class="container mt-5">
-        <h2 class="mb-4">🛒 Your Shopping Cart</h2>
-        <p class="text-muted">Note: Minimum of ₱50 to proceed checkout.</p>
-        <?php if (empty($cart_items)): ?>
-            <div class="alert alert-info">Your cart is empty.</div>
-        <?php else: ?>
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Image</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $total = 0;
-                    foreach ($cart_items as $item): ?>
-                        <?php
-                        $subtotal = $item['price'] * $item['quantity'];
-                        $total += $subtotal;
-                        $imageName = !empty($item['image']) ? basename($item['image']) : 'placeholder.png';
-                        $imagePath = '../assets/images/' . $imageName;
-                        ?>
-                        <tr>
-                            <td>
-                                <?php if (file_exists($imagePath)): ?>
-                                    <img src="<?= htmlspecialchars($imagePath) ?>" class="cart-img rounded" alt="Product Image">
+<!-- <div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row" style="height: 10px;">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Fresh and Organic</p>
+						<h1>Cart</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+    <div class="cart-section mt-150 mb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="cart-table-wrap">
+                        <table class="cart-table">
+                            <thead class="cart-table-head">
+                                <tr class="table-head-row">
+                                    <th class="product-remove"></th>
+                                    <th class="product-image">Product Image</th>
+                                    <th class="product-name">Name</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-total">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $total = 0; ?>
+                                <?php if (empty($cart_items)): ?>
+                                    <tr class="table-body-row">
+                                        <td colspan="6" class="text-center">Your cart is empty.</td>
+                                    </tr>
                                 <?php else: ?>
-                                    <img src="../assets/images/placeholder.png" class="cart-img rounded" alt="No Image">
+                                    <?php foreach ($cart_items as $item): ?>
+                                        <?php
+                                        $subtotal = $item['price'] * $item['quantity'];
+                                        $total += $subtotal;
+                                        $imageName = !empty($item['image']) ? basename($item['image']) : 'placeholder.png';
+                                        $imagePath = '../assets/images/' . $imageName;
+                                        ?>
+                                        <tr class="table-body-row">
+                                            <td class="product-remove">
+                                                <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>"><i class="far fa-window-close"></i></a>
+                                            </td>
+                                            <td class="product-image">
+                                                <?php if (file_exists($imagePath)): ?>
+                                                    <img src="<?= htmlspecialchars($imagePath) ?>" alt="Product Image">
+                                                <?php else: ?>
+                                                    <img src="../assets/images/placeholder.png" alt="No Image">
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="product-name"><?= htmlspecialchars($item['name']) ?></td>
+                                            <td class="product-price">₱<?= number_format($item['price'], 2) ?></td>
+                                            <td class="product-quantity">
+                                                <a href="cart.php?action=increase&id=<?= $item['product_id'] ?>" class="btn btn-success btn-sm">+</a>
+                                                <?= $item['quantity'] ?>
+                                                <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>" class="btn btn-warning btn-sm">-</a>
+                                            </td>
+                                            <td class="product-total">₱<?= number_format($subtotal, 2) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 <?php endif; ?>
-                            </td>
-                            <td><?= htmlspecialchars($item['name']) ?></td>
-                            <td>₱<?= number_format($item['price'], 2) ?></td>
-                            <td><?= $item['quantity'] ?></td>
-                            <td>₱<?= number_format($subtotal, 2) ?></td>
-                            <td>
-                                <a href="cart.php?action=increase&id=<?= $item['product_id'] ?>" class="btn btn-success btn-sm"><i
-                                        class="bi bi-plus"></i></a>
-                                <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>" class="btn btn-warning btn-sm"><i
-                                        class="bi bi-dash"></i></a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <tr class="table-secondary">
-                        <td colspan="4" class="text-end"><strong>Total</strong></td>
-                        <td colspan="2"><strong>₱<?= number_format($total, 2) ?></strong></td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="cart.php?clear=1" class="btn btn-danger me-2">🗑 Clear Cart</a>
-            <form action="checkout.php" method="POST" class="d-inline">
-                <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
-            </form>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <?php endif; ?>
-        <a href="products.php" class="btn btn-secondary mt-3">
-            <img src="../assets/images/products.png" alt="Back to Products" style="width: 24px; height: 24px;"> Back to
-            Products
-        </a>
+                <div class="col-lg-4">
+                    <div class="total-section">
+                        <table class="total-table">
+                            <thead class="total-table-head">
+                                <tr class="table-total-row">
+                                    <th>Total</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="total-data">
+                                    <td><strong>Subtotal: </strong></td>
+                                    <td>₱<?= number_format($total, 2) ?></td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Shipping: </strong></td>
+                                    <td>₱<?= empty($cart_items) ? '0.00' : '45.00' ?></td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Total: </strong></td>
+                                    <td>₱<?= empty($cart_items) ? '0.00' : number_format($total + 45, 2) ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="cart-buttons">
+                            <a href="products.php" class="btn btn-secondary btn-block">Back to Products</a>
+                            <a href="cart.php?clear=1" class="btn btn-danger btn-block">Clear Cart</a>
+                            <form action="checkout.php" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-primary btn-block" <?= empty($cart_items) ? 'disabled' : '' ?>>Check Out</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="coupon-section">
+                        <h3>Apply Coupon</h3>
+                        <div class="coupon-form-wrap">
+                            <form action="#" method="POST">
+                                <p><input type="text" name="coupon_code" placeholder="Coupon"></p>
+                                <p><input type="submit" value="Apply"></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
