@@ -184,7 +184,7 @@
                                 <p>☑️ Guide fee</p>
                                 <p>☑️ Local fee & community fee</p>
                                 <p>☑️ 2 hosted meals (dinner & breakfast)</p>
-                                <p>☑️ Roundtrip Transportation (Dvo-Bukidnon v.v)</p>
+                                <p>☑️ Roundtrip Transportation (Dvo-Bukidnon v.v) or (CDO-Bukidnon v.v)</p>
                                 <p>☑️ Ground Rental fee</p>
                                 <p>☑️ Souviner sticker</p>
 
@@ -202,73 +202,41 @@
         </div>
     </div>
 
-    
-    <main class="container mt-3 mb-4">
-        <div class="content p-5">
-            <?php if ($role === 'user'): ?>
-                <p>Welcome <?= htmlspecialchars($_SESSION['full_name'] ?? '') ?>!</p>
-            <?php else: ?>
-                <p>Welcome, Guest!</p>
-                <a href="../login.php">Login</a> or <a href="../signup.php">Sign up</a>
-            <?php endif; ?>
-            <p class="text-muted">Your partner in the mountain!</p>
-            <br>
+      <div class="d-flex justify-content-center align-items-center my-5" >
+        <div class="row" style="width: 100%; max-width: 1500px;">
+            <!-- Card Content -->
+            <div class="col-md-4" style="margin-left: px;">
+                <div class="card" style="height: 600px;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h3 class="card-title">LAKE HOLON</h3>
+                            <p class="card-text" style="text-align: justify; line-height: 1.5;">Lake Holon is a volcanic crater lake located in T'boli, South Cotabato, Philippines. It is considered the
+                                 cleanest inland body 
+                                of water in the Philippines and is known for its scenic beauty. Lake Holon is also recognized as one of the world's "Top 100 Sustainable Destinations".</p>
+                                <p>INCLUSIONS:</p>
+                                <p>☑️ Registration Fee</p>
+                                <p>☑️ Guide fee</p>
+                                <p>☑️ Local fee & community fee</p>
+                                <p>☑️ 2 hosted meals (dinner & breakfast)</p>
+                                <p>☑️ Roundtrip Transportation (Dvo-T'Boli v.v) or (CDO-T'Boli v.v) </p>
+                                <p>☑️ Ground Rental fee</p>
+                                <p>☑️ Souviner sticker</p>
 
-            <!-- video start -->
-
-            <div class="row">
-                <!-- First Video -->
-                <div class="col-md-6 mb-4">
-                    <div class="card product-card text-center">
-                        <h5 class="card-title mt-3">Kulago</h5>
-                        <div class="card-body d-flex justify-content-center">
-                            <div class="video-wrapper" data-title="Kulago"
-                                data-description="Discover the peaceful beauty of Mount Kulago, where every step brings you closer to nature's calm and endless adventure.">
-                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
-                                    <source src="../assets/videos/promote.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
                         </div>
-                        <p class="text-muted">Discover the peaceful beauty of Mount Kulago, where every step brings you
-                            closer to nature's calm and endless adventure.</p>
-                    </div>
-                </div>
-
-                <!-- Second Video -->
-                <div class="col-md-6 mb-4">
-                    <div class="card product-card text-center">
-                        <h5 class="card-title mt-3">Holon</h5>
-                        <div class="card-body d-flex justify-content-center">
-                            <div class="video-wrapper" data-title="Holon"
-                                data-description="Journey to the breathtaking Lake Holon, hidden in the heart of the mountains — a perfect escape for your soul and spirit.">
-                                <video class="w-100 video-hover" style="max-height: 400px; object-fit: cover;">
-                                    <source src="../assets/videos/holon.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </div>
-                        <p class="text-muted">Journey to the breathtaking Lake Holon, hidden in the heart of the
-                            mountains — a perfect escape for your soul and spirit.</p>
+                        <a href="bookings.php" class="btn btn-primary mt-3">Book Your Adventure</a>
                     </div>
                 </div>
             </div>
-            <!-- video end -->
-
-            <script>
-                document.querySelectorAll('.video-hover').forEach(video => {
-                    video.addEventListener('mouseenter', () => {
-                        video.play();
-                    });
-                    video.addEventListener('mouseleave', () => {
-                        video.pause();
-                        video.currentTime = 0;
-                    });
-                });
-            </script>
-
+            <!-- Video Frame -->
+            <div class="col-md-8">
+                <div class="embed-responsive embed-responsive-16by9" style="width: 100%; height: 600px;">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gYE59nkBTUQ" allowfullscreen style="width: 100%; height: 100%;"></iframe>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
+
+    
 
     <div style="display: flex; justify-content: center; align-items: center;">
 		<h1>Tour Organizer/Guides</h1>
@@ -317,49 +285,65 @@
     </div>
     
 
-    <footer style>
-    <div class="footer-area" >
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box about-widget">
-						<h2 class="widget-title">About us</h2>
-						<p>Saka Bukit is your trusted destination for eCommerce and booking services. We offer a seamless shopping experience and easy reservations for various services. Our platform combines convenience, quality, and reliability to serve individuals and businesses across the region. Shop and book with confidence at Saka Bukit.</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box get-in-touch">
-						<h2 class="widget-title">Get in Touch</h2>
-						<ul>
-							<li> Fortich Street, Barangay 3, Malaybalay City, Bukidnon</li>
-							<li>support@sakabukit.com</li>
-							<li>+00 111 222 3333</li>
-						</ul>
-					</div>
-				</div>
-				
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box subscribe">
-						<h2 class="widget-title">Subscribe</h2>
-						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="#">
+    <footer style="background-color: #051922;">
+    <div class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box about-widget">
+                        <h2 class="widget-title">About us</h2>
+                        <p>Saka Bukit is your trusted destination for eCommerce and booking services.
+                             We offer a seamless shopping experience and easy reservations for various 
+                             services. Our platform combines convenience, quality, and reliability to 
+                             serve individuals and businesses across the region. Shop and book with confidence at Saka Bukit.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box get-in-touch">
+                        <h2 class="widget-title">Get in Touch</h2>
+                        <ul>
+                            <li> Fortich Street, Barangay 3, Malaybalay City, Bukidnon</li>
+                            <li>support@sakabukit.com</li>
+                            <li>+00 111 222 3333</li>
+                        </ul>
+                        </div>
+                    </div>
+                    
+                
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-box subscribe">
+                        <h2 class="widget-title">Subscribe</h2>
+                        <p>Subscribe to our mailing list to get the latest updates.</p>
+                        <form action="#">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <input type="email" placeholder="Email" style="flex: 1; height: 40px; padding: 0 10px;">
                                 <button type="submit" style="height: 40px; display: flex; align-items: center; justify-content: center; padding: 0 15px;">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
                             </div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-        <div class="container text-center mt-5">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- <div class="container text-center mt-5">
             <p class="mb-0" style="color: orange;">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
             <small>Climb mountains not so the world can see you, but so you can see the world.</small>
-        </div>
+        </div> -->
     </footer>
+        <div class="copyright text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-12">
+                        <p>Copyrights &copy; 2025 - <a href="https://imransdesign.com/">SAKA BUKIT</a>, All Rights Reserved.<br>
+                        Climb mountains not so the world can see you, but so you can see the world
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
 
     <!-- JavaScript -->
     <script>

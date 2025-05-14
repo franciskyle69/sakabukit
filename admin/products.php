@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['product_name'];
             $price = $_POST['product_price'];
             $category = $_POST['product_category'];
+            $description = $_POST['product_description'];
             $image = $_FILES['product_image'];
 
             $imageName = time() . '_' . basename($image['name']);
@@ -63,14 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             compressAndResizeImage($image['tmp_name'], $imagePath, 70, 1000);
 
-            $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image, stock) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $price, $category, $imagePath, 1]);
+            $stmt = $pdo->prepare("INSERT INTO products (name, price, category, description, image, stock) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $price, $category, $description, $imagePath, 1]);
 
         } elseif ($formType === 'edit_product') {
             $id = $_POST['product_id'];
             $name = $_POST['product_name'];
             $price = $_POST['product_price'];
             $category = $_POST['product_category'];
+            $description = $_POST['product_description'];
 
             if (!empty($_FILES['product_image']['name'])) {
                 $image = $_FILES['product_image'];
@@ -79,11 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 compressAndResizeImage($image['tmp_name'], $imagePath, 70, 1000);
 
-                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, image=? WHERE id=?");
-                $stmt->execute([$name, $price, $category, $imagePath, $id]);
+                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, description=?, image=? WHERE id=?");
+                $stmt->execute([$name, $price, $category, $description, $imagePath, $id]);
             } else {
-                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=? WHERE id=?");
-                $stmt->execute([$name, $price, $category, $id]);
+                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, description=? WHERE id=?");
+                $stmt->execute([$name, $price, $category, $description, $id]);
             }
 
         } elseif ($formType === 'add_stock') {
@@ -216,6 +218,10 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                             <input type="text" name="product_category" id="edit_category" class="form-control">
                         </div>
                         <div class="mb-3">
+                            <label>Description</label>
+                            <textarea name="product_description" id="edit_description" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
                             <label>Change Image (optional)</label>
                             <input type="file" name="product_image" class="form-control" accept="image/*">
                         </div>
@@ -257,7 +263,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                         </div>
                         <div class="mb-3">
                             <label>Category</label>
-                            <select name="product_category" class="form-select" required>
+                            <select name="product_category" class="form-select" required onchange="toggleSizeOptions(this.value)">
                                 <option value="" disabled selected>Select a category</option>
                                 <option value="Jackets">Jackets</option>
                                 <option value="Backpacks">Backpacks</option>
@@ -266,7 +272,66 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                                 <option value="Bundles">Bundles</option>
                             </select>
                         </div>
-
+                        <div class="mb-3" id="size-options" style="display: none;">
+                            <label>Size</label>
+                            <select name="product_size" class="form-select">
+                                <option value="" disabled selected>Select a size</option>
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                                <option value="Extra Large">Extra Large</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="shoe-size-options" style="display: none;">
+                            <label>Shoe Size (US)</label>
+                            <select name="product_shoe_size" class="form-select">
+                                <option value="" disabled selected>Select a shoe size</option>
+                                <option value="6">6</option>
+                                <option value="6.5">6.5</option>
+                                <option value="7">7</option>
+                                <option value="7.5">7.5</option>
+                                <option value="8">8</option>
+                                <option value="8.5">8.5</option>
+                                <option value="9">9</option>
+                                <option value="9.5">9.5</option>
+                                <option value="10">10</option>
+                                <option value="10.5">10.5</option>
+                                <option value="11">11</option>
+                                <option value="11.5">11.5</option>
+                                <option value="12">12</option>
+                                <option value="12.5">12.5</option>
+                                <option value="13">13</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="multi-size-options" style="display: none;">
+                            <label>Sizes</label>
+                            <select name="product_sizes[]" class="form-select" multiple>
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                                <option value="Extra Large">Extra Large</option>
+                                <option value="6">6</option>
+                                <option value="6.5">6.5</option>
+                                <option value="7">7</option>
+                                <option value="7.5">7.5</option>
+                                <option value="8">8</option>
+                                <option value="8.5">8.5</option>
+                                <option value="9">9</option>
+                                <option value="9.5">9.5</option>
+                                <option value="10">10</option>
+                                <option value="10.5">10.5</option>
+                                <option value="11">11</option>
+                                <option value="11.5">11.5</option>
+                                <option value="12">12</option>
+                                <option value="12.5">12.5</option>
+                                <option value="13">13</option>
+                            </select>
+                            <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple sizes.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label>Description</label>
+                            <textarea name="product_description" class="form-control" rows="3" required></textarea>
+                        </div>
                         <div class="mb-3">
                             <label>Product Image</label>
                             <input type="file" name="product_image" class="form-control" accept="image/*" required>
@@ -279,6 +344,28 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleSizeOptions(category) {
+            const sizeOptions = document.getElementById('size-options');
+            const shoeSizeOptions = document.getElementById('shoe-size-options');
+            const multiSizeOptions = document.getElementById('multi-size-options');
+
+            if (category === 'Footwear') {
+                sizeOptions.style.display = 'none';
+                shoeSizeOptions.style.display = 'none';
+                multiSizeOptions.style.display = 'block';
+            } else if (category === 'Jackets' || category === 'Bundles') {
+                sizeOptions.style.display = 'none';
+                shoeSizeOptions.style.display = 'none';
+                multiSizeOptions.style.display = 'block';
+            } else {
+                sizeOptions.style.display = 'none';
+                shoeSizeOptions.style.display = 'none';
+                multiSizeOptions.style.display = 'none';
+            }
+        }
+    </script>
 
     <script>
         const editModal = document.getElementById('editModal');

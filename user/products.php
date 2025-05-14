@@ -149,12 +149,65 @@ include '../includes/auth_check.php';
     </div>
   </main>
 
-  <footer class="text-center">
-  <div class="container text-center mt-5">
+ <footer style="background-color: #051922;">
+    <div class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box about-widget">
+                        <h2 class="widget-title">About us</h2>
+                        <p>Saka Bukit is your trusted destination for eCommerce and booking services.
+                             We offer a seamless shopping experience and easy reservations for various 
+                             services. Our platform combines convenience, quality, and reliability to 
+                             serve individuals and businesses across the region. Shop and book with confidence at Saka Bukit.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box get-in-touch">
+                        <h2 class="widget-title">Get in Touch</h2>
+                        <ul>
+                            <li> Fortich Street, Barangay 3, Malaybalay City, Bukidnon</li>
+                            <li>support@sakabukit.com</li>
+                            <li>+00 111 222 3333</li>
+                        </ul>
+                        </div>
+                    </div>
+                    
+                
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-box subscribe">
+                        <h2 class="widget-title">Subscribe</h2>
+                        <p>Subscribe to our mailing list to get the latest updates.</p>
+                        <form action="#">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="email" placeholder="Email" style="flex: 1; height: 40px; padding: 0 10px;">
+                                <button type="submit" style="height: 40px; display: flex; align-items: center; justify-content: center; padding: 0 15px;">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- <div class="container text-center mt-5">
             <p class="mb-0" style="color: orange;">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
             <small>Climb mountains not so the world can see you, but so you can see the world.</small>
+        </div> -->
+    </footer>
+        <div class="copyright text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-12">
+                        <p>Copyrights &copy; 2025 - <a href="https://imransdesign.com/">SAKA BUKIT</a>, All Rights Reserved.<br>
+                        Climb mountains not so the world can see you, but so you can see the world
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-  </footer>
+	</div>
 
 </body>
 
