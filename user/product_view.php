@@ -57,41 +57,62 @@ if (isset($_GET['id'])) {
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
                 </form>
 
-                    <div class="mt-4">
-                        <label for="product_size">Size:</label>
-                        <div class="d-flex flex-wrap">
-                            <?php 
-                            // Fetch sizes from the database
-                            $stmt = $pdo->prepare("SELECT size FROM product_sizes WHERE product_id = ?");
-                            $stmt->execute([$product['id']]);
-                            $sizes = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                    <div class="mt-4" style="margin-bottom:10px;">
+                        <h5>Available Sizes</h5>
+                        <div class="row">
+                            <?php
+                            // Define which categories use sizes
+                            $footwearCategories = ['Footwear', 'Shoes', 'Slippers', 'Sandals']; // adjust as needed
+                            $clothingCategories = ['Clothing', 'Shirts', 'Pants', 'Jackets', 'T-Shirts']; // adjust as needed
 
-                            if ($sizes) {
-                                foreach ($sizes as $size) { ?>
-                                    <div class="card m-2" style="width: 8rem; cursor: pointer;" onclick="selectSize('<?php echo $size; ?>')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title"><?php echo htmlspecialchars($size); ?></h5>
-                                        </div>
+                            $category = strtolower(trim($product['category']));
+
+                            // Check if product is footwear or clothing
+                            $isFootwear = in_array(ucfirst($category), $footwearCategories);
+                            $isClothing = in_array(ucfirst($category), $clothingCategories);
+
+                            if ($isFootwear || $isClothing) {
+                                if (!empty($product['sizes'])) {
+                                    $sizes = array_map('trim', explode(',', $product['sizes']));
+                                    ?>
+                                    <div class="row" id="size-options">
+                                        <?php foreach ($sizes as $size): ?>
+                                            <div class="col-4 mb-2">
+                                                <label class="card text-center size-card" style="cursor:pointer;">
+                                                    <input type="radio" name="selected_size" value="<?php echo htmlspecialchars($size); ?>" class="d-none" required>
+                                                    <div class="card-body p-2">
+                                                        <span class="fw-bold"><?php echo htmlspecialchars($size); ?></span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
-                                <?php }
+                                    <script>
+                                    // Highlight selected card
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const cards = document.querySelectorAll('.size-card input[type="radio"]');
+                                        cards.forEach(function(radio) {
+                                            radio.addEventListener('change', function() {
+                                                document.querySelectorAll('.size-card').forEach(function(card) {
+                                                    card.classList.remove('border-primary');
+                                                });
+                                                if (radio.checked) {
+                                                    radio.closest('.size-card').classList.add('border-primary');
+                                                }
+                                            });
+                                        });
+                                    });
+                                    </script>
+                                    <?php
+                                } else {
+                                    echo '<div class="col-12"><p>No sizes available.</p></div>';
+                                }
                             } else {
-                                echo "<p>No sizes available for this product.</p>";
+                                echo '<div class="col-12"><p>Sizes not applicable for this product.</p></div>';
                             }
                             ?>
                         </div>
-                        <input type="hidden" name="product_size" id="product_size" value="">
-                        </div>
-
-                        <script>
-                        function selectSize(size) {
-                            document.getElementById('product_size').value = size;
-                            const cards = document.querySelectorAll('.card');
-                            cards.forEach(card => card.classList.remove('border-primary'));
-                            event.currentTarget.classList.add('border-primary');
-                        }
-                        </script>
                     </div>
-            
         </div>
         <div class="row mt-4">
             <div class="col-12">
@@ -118,9 +139,9 @@ if (isset($_GET['id'])) {
         if ($relatedProducts) {
             foreach ($relatedProducts as $related) {
                 ?>
-                <div class="col-md-2">
-                    <div class="card mx-auto" style="width: 15rem; margin: 0; margin-bottom: 0;">
-                        <img src="<?php echo htmlspecialchars($related['image']); ?>" class="card-img-top" alt="Related Product" style="height: 150px; object-fit: cover;">
+                <div class="col-md-3 d-flex justify-content-center mb-4">
+                    <div class="card mx-auto" style="width: 20rem; margin: 0;">
+                        <img src="<?php echo htmlspecialchars($related['image']); ?>" class="card-img-top" alt="Related Product" style="height: 250px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($related['name']); ?></h5>
                             <p class="card-text text-danger">₱<?php echo number_format($related['price'], 2); ?></p>

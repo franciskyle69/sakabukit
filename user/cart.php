@@ -99,7 +99,7 @@ $stmt->execute([$user_id]);
 $cart_items = $stmt->fetchAll();
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
