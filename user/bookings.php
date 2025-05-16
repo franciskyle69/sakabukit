@@ -36,11 +36,7 @@
 
 </head>
 <body>
-    <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    include '../includes/navbar.php'; ?>
+    <?php include '../includes/navbar.php'; ?>
 
     <main class="container mt-4 mb-5">
         <div class="content p-4 fade-in">
