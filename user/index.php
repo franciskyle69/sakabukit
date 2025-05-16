@@ -138,23 +138,27 @@
 
                 if (mysqli_num_rows($result) > 0):
                     while ($product = mysqli_fetch_assoc($result)): ?>
-                        <div class="col-lg-4 col-md-6 text-center">
-                            <div class="single-product-item">
-                                <div class="product-image">
-                                    <a href="single-product.php?id=<?= $product['id'] ?>">
-                                        <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
+                        <div class="col-lg-4 col-md-6 text-center d-flex align-items-stretch">
+                            <div class="single-product-item w-100" style="display: flex; flex-direction: column; height: 100%; min-height: 420px; max-width: 350px; margin: 0 auto;">
+                                <div class="product-image" style="flex: 0 0 300px; display: flex; align-items: center; justify-content: center; height: 300px; overflow: hidden;">
+                                    <a href="product_view.php?id=<?= $product['id'] ?>" style="display: block; width: 100%; height: 100%;">
+                                        <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" style="max-width: 100%; max-height: 100%; object-fit: cover; width: 100%; height: 100%;">
                                     </a>
                                 </div>
-                                <h3><?= htmlspecialchars($product['name']) ?></h3>
-                                <p class="product-price">₱<?= htmlspecialchars($product['price']) ?></p>
-                                <form method="post" action="cart.php">
-                                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                                    <input type="hidden" name="product_name" value="<?= htmlspecialchars($product['name']) ?>">
-                                    <input type="hidden" name="product_price" value="<?= htmlspecialchars($product['price']) ?>">
-                                    <button type="submit" class="cart-btn btn btn-primary mt-2">
-                                        <i class="fas fa-shopping-cart"></i> Add to Cart
-                                    </button>
-                                </form>
+                                <div style="flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <h3><?= htmlspecialchars($product['name']) ?></h3>
+                                        <p class="product-price">₱<?= htmlspecialchars($product['price']) ?></p>
+                                    </div>
+                                    <form method="post" action="cart.php" style="margin-top: auto;">
+                                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                        <input type="hidden" name="product_name" value="<?= htmlspecialchars($product['name']) ?>">
+                                        <input type="hidden" name="product_price" value="<?= htmlspecialchars($product['price']) ?>">
+                                        <button type="submit" class="cart-btn btn btn-primary mt-2">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     <?php endwhile;

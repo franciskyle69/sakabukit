@@ -1,3 +1,4 @@
+
 <?php
 include '../includes/db.php';
 include '../includes/auth_check.php';
@@ -132,10 +133,11 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Products</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+       
     <style>
         .product-card {
             transition: transform 0.2s, box-shadow 0.2s;
