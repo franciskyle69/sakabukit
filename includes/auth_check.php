@@ -20,7 +20,8 @@ $guest_allowed = [
     'reset_password.php',
     'resend_code.php',
     'enter_code.php',
-    'login_validate.php'
+    'login_validate.php',
+    'user/index.php'
 ];
 
 $current_file = basename($_SERVER['PHP_SELF']);
@@ -34,10 +35,10 @@ if ($role === 'guest' && !in_array($current_file, $guest_allowed)) {
 // Optional: redirect to default dashboard ONLY if currently on login.php or index.php
 // Prevents looping behavior when already navigating internally
 if ($current_file === 'login.php' || $current_file === 'index.php') {
-    if ($role === 'admin') {
+    if ($role === 'admin' && $current_file !== 'index.php') {
         header("Location: ../admin/index.php");
         exit();
-    } elseif ($role === 'user') {
+    } elseif ($role === 'user' && $current_file !== 'index.php') {
         header("Location: ../user/index.php");
         exit();
     }

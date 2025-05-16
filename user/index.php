@@ -1,3 +1,17 @@
+<?php
+require_once '../includes/auth_check.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// If no role is set, treat as guest
+if (!isset($_SESSION['role'])) {
+    $_SESSION['role'] = 'guest';
+}
+
+$role = $_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 

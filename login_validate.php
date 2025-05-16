@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'includes/auth_check.php';
 require 'includes/db.php';
 
 $recaptchaSecret = '6Ld6kyQrAAAAAKeE4q0x4s0fISlWohZ4BBz7OXWp'; // Secret Key
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($password, $user['password'])) {
         // Successful login
-        $_SESSION['login_attempts'] = 0; // ✅ Reset attempts after success
+        $_SESSION['login_attempts'] = 0; // Reset attempts after success
         $_SESSION['user'] = $user['username'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['role'] = $user['role'];

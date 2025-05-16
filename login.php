@@ -13,7 +13,8 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="https://cdn.materialdesignicons.com/7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -124,19 +125,21 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
     <div class="container custom-container">
         <div class="card custom-card">
             <img src="assets/images/logo.png" alt="Logo" class="custom-logo">
-            
+
             <div class="card-body">
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger" role="alert">
                         <i class="mdi mdi-alert-circle me-2"></i>
-                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                        <?= $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success" role="alert">
                         <i class="mdi mdi-check-circle me-2"></i>
-                        <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                        <?= $_SESSION['success'];
+                        unset($_SESSION['success']); ?>
                     </div>
                 <?php endif; ?>
 
@@ -167,15 +170,15 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
                     </div>
 
                     <button type="submit" class="btn custom-login-btn">
-                        <i class="mdi mdi-login me-2"></i> Sign In
+                        <i class="mdi mdi-login me-2"></i> Log in
                     </button>
                 </form>
 
                 <div class="text-center mt-4">
                     <p class="mb-3 text-muted">Or continue with</p>
                     <a href="googleAuth/google-login.php" class="btn custom-google-btn">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
-                             alt="Google Icon" width="20" height="20">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+                            alt="Google Icon" width="20" height="20">
                         <span>Google</span>
                     </a>
                 </div>
@@ -189,7 +192,7 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
                         </a>
                     </p>
                     <p class="mb-0">
-                        Don't have an account? 
+                        Don't have an account?
                         <a href="signup.php" class="text-decoration-none">
                             <i class="mdi mdi-account-plus me-1"></i> Sign up
                         </a>

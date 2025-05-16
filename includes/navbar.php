@@ -1,30 +1,82 @@
 <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-	<!-- fontawesome -->
-	<link rel="stylesheet" href="assets/css/all.min.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-	<!-- owl carousel -->
-	<link rel="stylesheet" href="assets/css/owl.carousel.css">
-	<!-- magnific popup -->
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<!-- animate css -->
-	<link rel="stylesheet" href="assets/css/animate.css">
-	<!-- mean menu css -->
-	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
-	<!-- main style -->
-	<link rel="stylesheet" href="assets/css/main.css">
-	<!-- responsive -->
-	<link rel="stylesheet" href="assets/css/responsive.css">
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-include 'db.php';
+<!-- google font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&family=Poppins:wght@400;700&display=swap"
+  rel="stylesheet">
+<!-- fontawesome -->
+<link rel="stylesheet" href="assets/css/all.min.css">
+<!-- bootstrap -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<!-- owl carousel -->
+<link rel="stylesheet" href="assets/css/owl.carousel.css">
+<!-- magnific popup -->
+<link rel="stylesheet" href="assets/css/magnific-popup.css">
+<!-- animate css -->
+<link rel="stylesheet" href="assets/css/animate.css">
+<!-- mean menu css -->
+<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+<!-- main style -->
+<link rel="stylesheet" href="assets/css/main.css">
+<!-- responsive -->
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-$role = $_SESSION['role'] ?? 'guest';
+<style>
+  :root {
+    --primary-font: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --heading-font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  body {
+    font-family: var(--primary-font);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .navbar-brand {
+    font-family: var(--heading-font);
+  }
+
+  nav.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    background-color: #051922;
+    font-family: var(--primary-font);
+  }
+
+  .navbar-nav .nav-link {
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #F28123 !important;
+  }
+
+  .navbar-brand img {
+    width: 150px;
+    height: 50px;
+    display: block;
+    margin-left: 200px;
+  }
+
+  @media (max-width: 991.98px) {
+    .navbar-brand img {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<?php
+require_once __DIR__ . '/auth_check.php';
 ?>
 
 <head>
@@ -42,8 +94,7 @@ $role = $_SESSION['role'] ?? 'guest';
 
 <nav class="navbar navbar-expand-lg navbar-dark px-4 py-2 shadow-sm">
   <a class="navbar-brand d-flex align-items-center text-white fw-bold" href="index.php">
-    <img src="../assets/img/SAKA_BUK_it-removebg-preview.png" alt="This is the logo"
-      style="width: 150px; height: 50px; display: block; margin-left: 200px;">
+    <img src="../assets/img/SAKA_BUK_it-removebg-preview.png" alt="SAKA BUKIT Logo">
     <!-- SAKA BUKIT -->
   </a>
 

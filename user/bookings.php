@@ -65,7 +65,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="/saka-bukit/user/process_booking.php" method="POST" class="booking-form">
+            <form action="process_booking.php" method="POST" class="booking-form">
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <label for="destination" class="form-label">
