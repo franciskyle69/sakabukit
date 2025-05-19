@@ -170,7 +170,7 @@ $siteKey = '6Ld6kyQrAAAAAMBiCoKtNOCZpZ5J-UgTDbPjZ_GM';
                     </div>
 
                     <button type="submit" class="btn custom-login-btn">
-                        <i class="mdi mdi-login me-2"></i> Log in
+                        <i class="mdi mdi-login me-2"></i> Sign In
                     </button>
                 </form>
 

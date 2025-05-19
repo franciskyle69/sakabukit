@@ -3,7 +3,8 @@ session_start();
 include '../includes/db.php';
 include '../includes/auth_check.php';
 
-$result = $conn->query("SELECT * FROM orders ORDER BY order_date DESC");
+$user_id = $_SESSION['user_id'];
+$result = $conn->query("SELECT * FROM orders WHERE user_id = $user_id ORDER BY order_date DESC");
 ?>
 
 <!DOCTYPE html>

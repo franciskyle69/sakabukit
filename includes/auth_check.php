@@ -28,7 +28,7 @@ $current_file = basename($_SERVER['PHP_SELF']);
 
 // Redirect guests if accessing a restricted page
 if ($role === 'guest' && !in_array($current_file, $guest_allowed)) {
-    header("Location: /user/index.php");
+    header("Location: ../user/index.php");
     exit();
 }
 

@@ -9,7 +9,7 @@ $dotenv->load();
 
 header('Content-Type: application/json');
 
-$domain = 'http://localhost/saka-bukit/user/';
+$domain = 'http://localhost/sakabukit/user/';
 
 $lineItems = [];
 

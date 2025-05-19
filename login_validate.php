@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $user['role'];
         $_SESSION['full_name'] = $user['firstname'] . ' ' . $user['lastname'];
         $_SESSION['user_id'] = $user['id'];
+        $_SESSION['profile_photo'] = $user['profile_photo'];
 
         if ($user['role'] === 'admin') {
             header("Location: admin/index.php");
