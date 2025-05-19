@@ -171,7 +171,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <?php foreach ($products as $row): ?>
                 <div class="col">
-                    <div class="card product-card h-100 animate__animated animate__fadeInUp" style="animation-duration:0.7s;">
+                    <div class="card product-card h-100">
                         <img src="<?= htmlspecialchars($row['image']) ?>" loading="lazy" class="card-img-top"
                             alt="Product Image">
                         <div class="card-body d-flex flex-column justify-content-between">
