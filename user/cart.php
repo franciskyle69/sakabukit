@@ -104,10 +104,47 @@ $cart_items = $stmt->fetchAll();
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
+
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="../assets/css/owl.carousel.css">
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <!-- mean menu css -->
+    <link rel="stylesheet" href="../assets/css/meanmenu.min.css">
+    <!-- main style -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <!-- responsive -->
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+
     <style>
+        html {
+            font-size: 16px;
+        }
+        body {
+            font-family: 'Open Sans', 'Poppins', Arial, sans-serif;
+            font-size: 1rem;
+        }
         .cart-img {
             width: 60px;
             height: 60px;
@@ -119,12 +156,27 @@ $cart_items = $stmt->fetchAll();
             vertical-align: middle;
         }
     </style>
+
+    <!-- jQuery -->
+    <script src="../assets/js/jquery-1.11.3.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Mean Menu JS -->
+    <script src="../assets/js/jquery.meanmenu.min.js"></script>
+    
+    <!-- Sticky JS -->
+    <script src="../assets/js/sticker.js"></script>
+    
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
 </head>
 
 <body>
-<div  style="" > <?php include '../includes/navbar.php'; ?> </div>
+    <div style=""> <?php include '../includes/navbar.php'; ?> </div>
 
-<!-- <div class="breadcrumb-section breadcrumb-bg">
+    <!-- <div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
 			<div class="row" style="height: 10px;">
 				<div class="col-lg-8 offset-lg-2 text-center">

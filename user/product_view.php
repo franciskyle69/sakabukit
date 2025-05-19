@@ -29,6 +29,21 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($product['name']); ?> - Product Details</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="../assets/js/jquery-1.11.3.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Mean Menu JS -->
+    <script src="../assets/js/jquery.meanmenu.min.js"></script>
+    
+    <!-- Sticky JS -->
+    <script src="../assets/js/sticker.js"></script>
+    
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
 </head>
 
 <body>

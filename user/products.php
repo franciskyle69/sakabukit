@@ -67,6 +67,21 @@ include '../includes/auth_check.php';
       text-decoration: underline;
     }
   </style>
+
+  <!-- jQuery -->
+  <script src="../assets/js/jquery-1.11.3.min.js"></script>
+  
+  <!-- Bootstrap JS -->
+  <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Mean Menu JS -->
+  <script src="../assets/js/jquery.meanmenu.min.js"></script>
+  
+  <!-- Sticky JS -->
+  <script src="../assets/js/sticker.js"></script>
+  
+  <!-- Main JS -->
+  <script src="../assets/js/main.js"></script>
 </head>
 
 <body>
