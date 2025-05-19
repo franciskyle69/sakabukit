@@ -21,6 +21,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    // Password validation
+    if (strlen($password) < 8) {
+        $_SESSION['error'] = "Password must be at least 8 characters long.";
+        header('Location: signup.php');
+        exit();
+    }
+
+    if (!preg_match('/[A-Z]/', $password)) {
+        $_SESSION['error'] = "Password must contain at least one uppercase letter.";
+        header('Location: signup.php');
+        exit();
+    }
+
+    if (!preg_match('/[a-z]/', $password)) {
+        $_SESSION['error'] = "Password must contain at least one lowercase letter.";
+        header('Location: signup.php');
+        exit();
+    }
+
+    if (!preg_match('/[0-9]/', $password)) {
+        $_SESSION['error'] = "Password must contain at least one number.";
+        header('Location: signup.php');
+        exit();
+    }
+
     // Check if username already exists
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
@@ -36,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$email]);
 
     if ($stmt->rowCount() > 0) {
-        $_SESSION['error'] = "Email already exists.";
+        $_SESSION['error'] = "This email address is already registered. Please use a different email or try logging in.";
         header('Location: signup.php');
         exit();
     }

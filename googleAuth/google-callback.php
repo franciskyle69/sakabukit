@@ -33,12 +33,13 @@ if (isset($_GET['code'])) {
             $firstName = $nameParts[0];
             $lastName = $nameParts[1] ?? '';
 
-            $stmt = $pdo->prepare("INSERT INTO users (firstname, lastname, username, email, role, created_at) VALUES (?, ?, ?, ?, 'user', NOW())");
+            $stmt = $pdo->prepare("INSERT INTO users (firstname, lastname, username, email, role, profile_photo, created_at) VALUES (?, ?, ?, ?, 'user', ?, NOW())");
             $stmt->execute([
                 $firstName,
                 $lastName,
                 $email, // Using email as username fallback
-                $email
+                $email,
+                $userInfo->picture // Save Google profile photo
             ]);
 
             $userId = $pdo->lastInsertId();
@@ -49,16 +50,25 @@ if (isset($_GET['code'])) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-
         // Set session values
         $_SESSION['user_type'] = 'google';
         $_SESSION['user_name'] = $userInfo->name;
         $_SESSION['full_name'] = $userInfo->name; // 👈 Needed for navbar
         $_SESSION['user_email'] = $email;
         $_SESSION['user_image'] = $userInfo->picture;
-        $_SESSION['role'] = $user['role'];
         $_SESSION['user_id'] = $user['id']; // Optional: user ID
+        $_SESSION['role'] = $user['role'];
         $_SESSION['success'] = 'Login with Google successful!';
+        $_SESSION['user'] = $user['username']; // Ensure settings page can fetch user data
+
+        // Set profile photo in session and update DB if needed
+        if (empty($user['profile_photo'])) {
+            $stmt = $pdo->prepare("UPDATE users SET profile_photo = ? WHERE id = ?");
+            $stmt->execute([$userInfo->picture, $user['id']]);
+            $_SESSION['profile_photo'] = $userInfo->picture;
+        } else {
+            $_SESSION['profile_photo'] = $user['profile_photo'];
+        }
 
         // Redirect based on role
         if ($user['role'] === 'admin') {

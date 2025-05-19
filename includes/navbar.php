@@ -77,6 +77,7 @@
 
 <?php
 require_once __DIR__ . '/auth_check.php';
+$profilePhoto = isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] ? $_SESSION['profile_photo'] : '../assets/img/profile-placeholder.png';
 ?>
 
 <head>
@@ -90,7 +91,7 @@ require_once __DIR__ . '/auth_check.php';
     }
   </style>
 </head>
-
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-dark px-4 py-2 shadow-sm">
   <a class="navbar-brand d-flex align-items-center text-white fw-bold" href="index.php">
@@ -138,7 +139,11 @@ require_once __DIR__ . '/auth_check.php';
           <span class="me-2 fw-semibold"><?= htmlspecialchars($_SESSION['full_name']); ?></span>
         <?php endif; ?>
 
-        <i class="bi bi-person-circle me-3" style="font-size: 1.6rem;"></i>
+        <?php if (isset($_SESSION['profile_photo']) && $_SESSION['profile_photo']): ?>
+          <img src="<?= htmlspecialchars($_SESSION['profile_photo']) ?>" alt="Profile" class="rounded-circle me-3" style="width: 38px; height: 38px; object-fit: cover; border: 2px solid #fff;">
+        <?php else: ?>
+          <img src="../assets/images/default-profile.png" alt="Profile" class="rounded-circle me-3" style="width: 38px; height: 38px; object-fit: cover; border: 2px solid #fff;">
+        <?php endif; ?>
 
         <a href="#" class="btn btn-outline-light btn-sm" onclick="confirmLogout(event)">Logout</a>
         <script>
@@ -158,3 +163,5 @@ require_once __DIR__ . '/auth_check.php';
     </div>
   <?php endif; ?>
 </nav>
+</body>
+</html>

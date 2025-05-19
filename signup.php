@@ -42,6 +42,7 @@
                     </div>
                     <div class="custom-input-container">
                         <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        <small class="text-muted">Password must be at least 8 characters long and include uppercase, lowercase, and numbers.</small>
                     </div>
                     <div class="custom-input-container">
                         <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>

@@ -55,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $price = $_POST['product_price'];
             $category = $_POST['product_category'];
             $image = $_FILES['product_image'];
+            $description = $_POST['description'];
+            $sizes = $_POST['sizes'];
 
             $imageName = time() . '_' . basename($image['name']);
             $imagePath = '../assets/images/' . $imageName;
@@ -63,14 +65,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             compressAndResizeImage($image['tmp_name'], $imagePath, 70, 1000);
 
-            $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image, stock) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $price, $category, $imagePath, 1]);
+            $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image, stock, description, sizes) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $price, $category, $imagePath, 1, $description, $sizes]);
 
         } elseif ($formType === 'edit_product') {
             $id = $_POST['product_id'];
             $name = $_POST['product_name'];
             $price = $_POST['product_price'];
             $category = $_POST['product_category'];
+            $description = $_POST['description'];
+            $sizes = $_POST['sizes'];
 
             if (!empty($_FILES['product_image']['name'])) {
                 $image = $_FILES['product_image'];
@@ -79,11 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 compressAndResizeImage($image['tmp_name'], $imagePath, 70, 1000);
 
-                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, image=? WHERE id=?");
-                $stmt->execute([$name, $price, $category, $imagePath, $id]);
+                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, image=?, description=?, sizes=? WHERE id=?");
+                $stmt->execute([$name, $price, $category, $imagePath, $description, $sizes, $id]);
             } else {
-                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=? WHERE id=?");
-                $stmt->execute([$name, $price, $category, $id]);
+                $stmt = $pdo->prepare("UPDATE products SET name=?, price=?, category=?, description=?, sizes=? WHERE id=?");
+                $stmt->execute([$name, $price, $category, $description, $sizes, $id]);
             }
 
         } elseif ($formType === 'add_stock') {
@@ -124,11 +128,28 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Products</title>
+    <!-- External Stylesheets (refactored for consistency) -->
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/meanmenu.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="icon" type="image/png" href="../assets/images/logo.png">
     <style>
+        html {
+            font-size: 16px;
+        }
+        body {
+            font-family: 'Open Sans', 'Poppins', Arial, sans-serif;
+            font-size: 1rem;
+        }
         .product-card {
             transition: transform 0.2s, box-shadow 0.2s;
             border: none;
@@ -150,7 +171,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <?php foreach ($products as $row): ?>
                 <div class="col">
-                    <div class="card product-card h-100">
+                    <div class="card product-card h-100 animate__animated animate__fadeInUp" style="animation-duration:0.7s;">
                         <img src="<?= htmlspecialchars($row['image']) ?>" loading="lazy" class="card-img-top"
                             alt="Product Image">
                         <div class="card-body d-flex flex-column justify-content-between">
@@ -158,13 +179,17 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                                 <h5 class="card-title"><?= htmlspecialchars($row['name']) ?></h5>
                                 <p class="text-muted">Category: <?= htmlspecialchars($row['category']) ?></p>
                                 <p class="text-muted">Stock: <?= $row['stock'] ?></p>
+                                <p class="text-muted">Description: <?= htmlspecialchars($row['description']) ?></p>
+                                <p class="text-muted">Sizes: <?= htmlspecialchars($row['sizes']) ?></p>
                                 <p><strong>₱<?= number_format($row['price'], 2) ?></strong></p>
                             </div>
                             <div class="d-grid gap-2">
                                 <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editModal"
                                     data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['name']) ?>"
                                     data-price="<?= $row['price'] ?>"
-                                    data-category="<?= htmlspecialchars($row['category']) ?>">
+                                    data-category="<?= htmlspecialchars($row['category']) ?>"
+                                    data-description="<?= htmlspecialchars($row['description']) ?>"
+                                    data-sizes="<?= htmlspecialchars($row['sizes']) ?>">
                                     Edit / Add Stock
                                 </button>
                                 <form method="POST" action="products.php" onsubmit="return confirm('Delete product?');">
@@ -178,8 +203,8 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
             <?php endforeach; ?>
 
             <div class="col">
-                <div class="card h-100 text-center"
-                    style="border: 2px dashed #ccc; background: #f9f9f9; cursor: pointer;" data-bs-toggle="modal"
+                <div class="card h-100 text-center animate__animated animate__zoomIn"
+                    style="border: 2px dashed #ccc; background: #f9f9f9; cursor: pointer; animation-duration:0.7s;" data-bs-toggle="modal"
                     data-bs-target="#addModal">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center">
                         <h5 class="card-title">+ Add Product</h5>
@@ -192,7 +217,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog animate__animated animate__fadeInDown" style="animation-duration:0.5s;">
             <div class="modal-content">
                 <form method="POST" action="products.php" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -214,6 +239,39 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                         <div class="mb-3">
                             <label>Category</label>
                             <input type="text" name="product_category" id="edit_category" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label>Description</label>
+                            <textarea name="description" id="edit_description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label>Available Sizes</label><br>
+                            <div id="edit-sizes-group">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="S" id="edit-size-s">
+                                    <label class="form-check-label" for="edit-size-s">S</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="M" id="edit-size-m">
+                                    <label class="form-check-label" for="edit-size-m">M</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="L" id="edit-size-l">
+                                    <label class="form-check-label" for="edit-size-l">L</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="XL" id="edit-size-xl">
+                                    <label class="form-check-label" for="edit-size-xl">XL</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="XXL" id="edit-size-xxl">
+                                    <label class="form-check-label" for="edit-size-xxl">XXL</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="None" id="edit-size-none">
+                                    <label class="form-check-label" for="edit-size-none">No sizes available</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label>Change Image (optional)</label>
@@ -238,13 +296,13 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
     <!-- Add Product Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog animate__animated animate__fadeInDown" style="animation-duration:0.5s;">
             <div class="modal-content">
                 <form action="products.php" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Add New Product</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
+                    </div>  
                     <div class="modal-body">
                         <input type="hidden" name="form_type" value="add_product">
                         <div class="mb-3">
@@ -266,7 +324,39 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                                 <option value="Bundles">Bundles</option>
                             </select>
                         </div>
-
+                        <div class="mb-3">
+                            <label>Description</label>
+                            <textarea name="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label>Available Sizes</label><br>
+                            <div id="add-sizes-group">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="S" id="add-size-s">
+                                    <label class="form-check-label" for="add-size-s">S</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="M" id="add-size-m">
+                                    <label class="form-check-label" for="add-size-m">M</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="L" id="add-size-l">
+                                    <label class="form-check-label" for="add-size-l">L</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="XL" id="add-size-xl">
+                                    <label class="form-check-label" for="add-size-xl">XL</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="XXL" id="add-size-xxl">
+                                    <label class="form-check-label" for="add-size-xxl">XXL</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sizes[]" value="None" id="add-size-none">
+                                    <label class="form-check-label" for="add-size-none">No sizes available</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label>Product Image</label>
                             <input type="file" name="product_image" class="form-control" accept="image/*" required>
@@ -288,13 +378,68 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
             const name = button.getAttribute('data-name');
             const price = button.getAttribute('data-price');
             const category = button.getAttribute('data-category');
+            const description = button.getAttribute('data-description');
+            const sizes = button.getAttribute('data-sizes');
 
             document.getElementById('edit_product_id').value = id;
             document.getElementById('edit_name').value = name;
             document.getElementById('edit_price').value = price;
             document.getElementById('edit_category').value = category;
+            document.getElementById('edit_description').value = description;
+            const sizesArray = sizes ? sizes.split(',') : [];
+            ['S','M','L','XL','XXL','None'].forEach(size => {
+                const cb = document.getElementById('edit-size-' + size.toLowerCase());
+                if (cb) cb.checked = sizesArray.includes(size);
+            });
+        });
+
+        // Add Modal: Disable other checkboxes if 'No sizes available' is checked
+        const addNone = document.getElementById('add-size-none');
+        const addSizeCheckboxes = Array.from(document.querySelectorAll('#add-sizes-group input[type=checkbox]')).filter(cb => cb.value !== 'None');
+        addNone.addEventListener('change', function() {
+            if (this.checked) {
+                addSizeCheckboxes.forEach(cb => { cb.checked = false; cb.disabled = true; });
+            } else {
+                addSizeCheckboxes.forEach(cb => { cb.disabled = false; });
+            }
+        });
+        addSizeCheckboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                if (this.checked) addNone.checked = false;
+            });
+        });
+
+        // Edit Modal: Same logic
+        const editNone = document.getElementById('edit-size-none');
+        const editSizeCheckboxes = Array.from(document.querySelectorAll('#edit-sizes-group input[type=checkbox]')).filter(cb => cb.value !== 'None');
+        editNone.addEventListener('change', function() {
+            if (this.checked) {
+                editSizeCheckboxes.forEach(cb => { cb.checked = false; cb.disabled = true; });
+            } else {
+                editSizeCheckboxes.forEach(cb => { cb.disabled = false; });
+            }
+        });
+        editSizeCheckboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                if (this.checked) editNone.checked = false;
+            });
         });
     </script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        .product-card {
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.13);
+            background: #f5faff;
+        }
+        .modal-dialog {
+            transition: transform 0.3s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+        }
+    </style>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </html>
