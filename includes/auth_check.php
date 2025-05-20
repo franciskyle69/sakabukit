@@ -1,7 +1,9 @@
 <?php
+// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 // If no role is set, treat as guest
 if (!isset($_SESSION['role'])) {
     $_SESSION['role'] = 'guest';

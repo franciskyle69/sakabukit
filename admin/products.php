@@ -179,7 +179,6 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
                                 <h5 class="card-title"><?= htmlspecialchars($row['name']) ?></h5>
                                 <p class="text-muted">Category: <?= htmlspecialchars($row['category']) ?></p>
                                 <p class="text-muted">Stock: <?= $row['stock'] ?></p>
-                                <p class="text-muted">Description: <?= htmlspecialchars($row['description']) ?></p>
                                 <p class="text-muted">Sizes: <?= htmlspecialchars($row['sizes']) ?></p>
                                 <p><strong>₱<?= number_format($row['price'], 2) ?></strong></p>
                             </div>
