@@ -89,7 +89,7 @@ include '../includes/auth_check.php';
   <?php include '../includes/navbar.php'; ?>
 
   <main class="container mt-5 mb-5 flex-grow-1">
-    <h2 class="text-center mb-4 font-weight-bold">
+    <h2 class="text-center mb-4 font-weight-bold animate__animated animate__fadeInDown">
       <?php
       if (isset($_GET['category'])) {
         echo htmlspecialchars($_GET['category']);
@@ -102,7 +102,7 @@ include '../includes/auth_check.php';
     <div class="row">
       <!-- Sidebar -->
       <div class="col-md-3 mb-4">
-        <div class="sidebar-categories">
+        <div class="sidebar-categories animate__animated animate__fadeInLeft">
           <h5 class="font-weight-bold mb-3">Categories</h5>
           <ul class="list-unstyled">
             <li class="mb-2"><a href="products.php" class="category-link">All</a></li>
@@ -119,6 +119,7 @@ include '../includes/auth_check.php';
       <div class="col-md-9">
         <div class="row">
           <?php
+          $delay = 0;
           if (isset($_GET['category']) && !empty($_GET['category'])) {
             $selectedCategory = $_GET['category'];
             $stmt = $pdo->prepare("SELECT * FROM products WHERE category = ? ORDER BY id DESC");
@@ -128,11 +129,12 @@ include '../includes/auth_check.php';
           }
 
           while ($row = $stmt->fetch()) {
+            $delay += 0.1;
             ?>
             <div class="col-md-4 mb-4">
               <a href="product_view.php?id=<?php echo $row['id']; ?>" class="text-decoration-none text-dark">
-                <div class="card h-100 shadow-sm border-0 product-card">
-                  <img src="<?php echo htmlspecialchars($row["image"]); ?>" class="card-img-top" alt="Product Image">
+                <div class="card h-100 shadow-sm border-0 product-card animate__animated animate__fadeInUp" style="animation-delay: <?php echo $delay; ?>s;">
+                  <img src="<?php echo htmlspecialchars($row["image"]); ?>" class="card-img-top product-img" alt="Product Image">
                   <div class="card-body d-flex flex-column justify-content-between">
                     <div>
                       <h5 class="card-title"><?php echo htmlspecialchars($row["name"]); ?></h5>
@@ -140,7 +142,7 @@ include '../includes/auth_check.php';
                       <p class="text-muted mb-1">₱<?php echo number_format($row["price"], 2); ?></p>
                       <div class="text-warning mb-2">★★★★☆</div>
                     </div>
-                    <button class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+                    <button class="btn btn-primary btn-block mt-auto add-to-cart-btn">Add to Cart</button>
                   </div>
                 </div>
               </a>
@@ -153,7 +155,7 @@ include '../includes/auth_check.php';
     </div>
   </main>
 
- <footer style="background-color: #051922;">
+ <footer style="background-color: #051922;" class="animate__animated animate__fadeInUp animate__delay-1s">
     <div class="footer-area">
         <div class="container">
             <div class="row">
@@ -200,7 +202,7 @@ include '../includes/auth_check.php';
             <small>Climb mountains not so the world can see you, but so you can see the world.</small>
         </div> -->
     </footer>
-        <div class="copyright text-center">
+        <div class="copyright text-center animate__animated animate__fadeIn animate__delay-2s">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-12">
@@ -211,8 +213,24 @@ include '../includes/auth_check.php';
                 </div>
             </div>
         </div>
-	</div>
+  </div>
 
+  <!-- Animate.css CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script>
+    // Add a little interaction animation for Add to Cart button
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.add-to-cart-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          btn.classList.add('animate__animated', 'animate__tada');
+          setTimeout(function() {
+            btn.classList.remove('animate__animated', 'animate__tada');
+          }, 700);
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -103,31 +103,60 @@ $role = $_SESSION['role'];
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
             z-index: 2;
         }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+        .fade-in.delay-1 { animation-delay: 0.1s; }
+        .fade-in.delay-2 { animation-delay: 0.2s; }
+        .fade-in.delay-3 { animation-delay: 0.5s; }
+        .fade-in.delay-4 { animation-delay: 0.8; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: scaleIn 0.8s forwards;
+        }
+        .scale-in.delay-1 { animation-delay: 0.5s; }
+        .scale-in.delay-2 { animation-delay: 0.8s; }
+        .scale-in.delay-3 { animation-delay: 1.1s; }
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 
 <body>
 
-
-
-
     <div style=""> <?php include '../includes/navbar.php'; ?> </div>
 
-    <div class="hero-area hero-bg">
+    <div class="hero-area hero-bg fade-in delay-1">
         <div class="container">
             <div class="row justify-content-center align-items-center" style="height: 100%;">
                 <div class="col-lg-9 text-center">
                     <div class="hero-text">
                         <div class="hero-text-tablecell">
-                            <p class="subtitle">SAKA BUK-IT</p>
-                            <h1>Explore more, Worry Less</h1>
-                            <div class="hero-btns">
+                            <p class="subtitle fade-in delay-2">SAKA BUK-IT</p>
+                            <h1 class="fade-in delay-3">Explore more, Worry Less</h1>
+                            <div class="hero-btns fade-in delay-4">
                                 <?php if ($role === 'guest'): ?>
-                                    <a href="../login.php" class="boxed-btn">Login</a>
-                                    <a href="../signup.php" class="bordered-btn">Sign Up</a>
+                                    <a href="../login.php" class="boxed-btn scale-in delay-1">Login</a>
+                                    <a href="../signup.php" class="bordered-btn scale-in delay-2">Sign Up</a>
                                 <?php else: ?>
-                                    <a href="products.php" class="boxed-btn">Gear Collection</a>
-                                    <a href="bookings.php" class="bordered-btn">Book With Us</a>
+                                    <a href="products.php" class="boxed-btn scale-in delay-1">Gear Collection</a>
+                                    <a href="bookings.php" class="bordered-btn scale-in delay-2">Book With Us</a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -137,10 +166,8 @@ $role = $_SESSION['role'];
         </div>
     </div>
 
-
-
     <!-- products -->
-    <div class="product-section mt-150 mb-150">
+    <div class="product-section mt-150 mb-150 fade-in delay-2">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 text-center">
@@ -161,8 +188,9 @@ $role = $_SESSION['role'];
                 $result = mysqli_query($conn, $query);
 
                 if (mysqli_num_rows($result) > 0):
+                    $delay = 1;
                     while ($product = mysqli_fetch_assoc($result)): ?>
-                        <div class="col-lg-4 col-md-6 text-center d-flex align-items-stretch">
+                        <div class="col-lg-4 col-md-6 text-center d-flex align-items-stretch fade-in delay-<?= $delay ?>">
                             <div class="single-product-item w-100"
                                 style="display: flex; flex-direction: column; height: 100%; min-height: 420px; max-width: 350px; margin: 0 auto;">
                                 <div class="product-image"
@@ -186,16 +214,16 @@ $role = $_SESSION['role'];
                                             value="<?= htmlspecialchars($product['name']) ?>">
                                         <input type="hidden" name="product_price"
                                             value="<?= htmlspecialchars($product['price']) ?>">
-                                        <button type="submit" class="cart-btn btn btn-primary mt-2">
+                                        <button type="submit" class="cart-btn btn btn-primary mt-2 scale-in delay-<?= $delay ?>">
                                             <i class="fas fa-shopping-cart"></i> Add to Cart
                                         </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                    <?php endwhile;
+                    <?php $delay++; endwhile;
                 else: ?>
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center fade-in delay-1">
                         <p>No products available at the moment.</p>
                     </div>
                 <?php endif; ?>
@@ -203,12 +231,11 @@ $role = $_SESSION['role'];
         </div>
     </div>
 
-
-    <div class="d-flex justify-content-center align-items-center my-5">
+    <div class="d-flex justify-content-center align-items-center my-5 fade-in delay-3">
         <div class="row" style="width: 100%; max-width: 1500px;">
             <!-- Card Content -->
-            <div class="col-md-4" style="margin-left: px;">
-                <div class="card" style="height: 600px;">
+            <div class="col-md-4">
+                <div class="card scale-in delay-1" style="height: 700px;">
                     <div class="card-body d-flex flex-column justify-content-between">
                         <div>
                             <h3 class="card-title">MT.KULAGO</h3>
@@ -226,15 +253,14 @@ $role = $_SESSION['role'];
                             <p>☑️ Roundtrip Transportation (Dvo-Bukidnon v.v) or (CDO-Bukidnon v.v)</p>
                             <p>☑️ Ground Rental fee</p>
                             <p>☑️ Souviner sticker</p>
-
                         </div>
-                        <a href="bookings.php" class="btn btn-primary mt-3">Book Your Adventure</a>
+                        <a href="bookings.php" class="btn btn-primary mt-3 scale-in delay-2">Book Your Adventure</a>
                     </div>
                 </div>
             </div>
             <!-- Video Frame -->
             <div class="col-md-8">
-                <div class="embed-responsive embed-responsive-16by9" style="width: 100%; height: 600px;">
+                <div class="embed-responsive embed-responsive-16by9 scale-in delay-3" style="width: 100%; height: 700px;">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/TFXkecXJXZE"
                         allowfullscreen style="width: 100%; height: 100%;"></iframe>
                 </div>
@@ -242,11 +268,11 @@ $role = $_SESSION['role'];
         </div>
     </div>
 
-    <div class="d-flex justify-content-center align-items-center my-5">
+    <div class="d-flex justify-content-center align-items-center my-5 fade-in delay-4">
         <div class="row" style="width: 100%; max-width: 1500px;">
             <!-- Card Content -->
-            <div class="col-md-4" style="margin-left: px;">
-                <div class="card" style="height: 600px;">
+            <div class="col-md-4">
+                <div class="card scale-in delay-1" style="height: 700px;">
                     <div class="card-body d-flex flex-column justify-content-between">
                         <div>
                             <h3 class="card-title">LAKE HOLON</h3>
@@ -263,15 +289,14 @@ $role = $_SESSION['role'];
                             <p>☑️ Roundtrip Transportation (Dvo-T'Boli v.v) or (CDO-T'Boli v.v) </p>
                             <p>☑️ Ground Rental fee</p>
                             <p>☑️ Souviner sticker</p>
-
                         </div>
-                        <a href="bookings.php" class="btn btn-primary mt-3">Book Your Adventure</a>
+                        <a href="bookings.php" class="btn btn-primary mt-3 scale-in delay-2">Book Your Adventure</a>
                     </div>
                 </div>
             </div>
             <!-- Video Frame -->
             <div class="col-md-8">
-                <div class="embed-responsive embed-responsive-16by9" style="width: 100%; height: 600px;">
+                <div class="embed-responsive embed-responsive-16by9 scale-in delay-3" style="width: 100%; height: 700px;">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gYE59nkBTUQ"
                         allowfullscreen style="width: 100%; height: 100%;"></iframe>
                 </div>
@@ -279,34 +304,31 @@ $role = $_SESSION['role'];
         </div>
     </div>
 
-
-
-    <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center;" class="fade-in delay-1">
         <h1>Tour Organizer/Guides</h1>
     </div>
 
-
-    <div class="logo-carousel-section">
+    <div class="logo-carousel-section fade-in delay-2">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="logo-carousel-inner d-flex justify-content-between align-items-center">
-                        <div class="single-logo-item">
+                        <div class="single-logo-item scale-in delay-1">
                             <a href="https://www.facebook.com/iTREKKERSph" target="_blank">
                                 <img src="../assets/img/company-logos/iT.jpg" style="border-radius: 50%;" alt="">
                             </a>
                         </div>
-                        <div class="single-logo-item">
+                        <div class="single-logo-item scale-in delay-2">
                             <a href="https://www.facebook.com/profile.php?id=61561342811020" target="_blank">
                                 <img src="../assets/img/company-logos/logo.jpg" style="border-radius: 50%;" alt="">
                             </a>
                         </div>
-                        <div class="single-logo-item">
+                        <div class="single-logo-item scale-in delay-3">
                             <a href="https://www.facebook.com/AngtadmountaineersMountainTrip" target="_blank">
                                 <img src="../assets/img/company-logos/EXP.jpg" style="border-radius: 50%;" alt="">
                             </a>
                         </div>
-                        <div class="single-logo-item"">
+                        <div class="single-logo-item scale-in delay-2">
                             <a href=" https://www.facebook.com/profile.php?id=61563526834293" target="_blank">
                             <img src="../assets/img/company-logos/PB.jpg" style="border-radius: 50%;" alt="">
                             </a>
@@ -327,12 +349,11 @@ $role = $_SESSION['role'];
         <video id="fullscreenVideo" controls></video>
     </div>
 
-
     <footer style="background-color: #051922;">
         <div class="footer-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-md-6 fade-in delay-1">
                         <div class="footer-box about-widget">
                             <h2 class="widget-title">About us</h2>
                             <p>Saka Bukit is your trusted destination for eCommerce and booking services.
@@ -342,7 +363,7 @@ $role = $_SESSION['role'];
                                 Saka Bukit.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-md-6 fade-in delay-2">
                         <div class="footer-box get-in-touch">
                             <h2 class="widget-title">Get in Touch</h2>
                             <ul>
@@ -352,9 +373,7 @@ $role = $_SESSION['role'];
                             </ul>
                         </div>
                     </div>
-
-
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-md-6 fade-in delay-3">
                         <div class="footer-box subscribe">
                             <h2 class="widget-title">Subscribe</h2>
                             <p>Subscribe to our mailing list to get the latest updates.</p>
@@ -373,12 +392,8 @@ $role = $_SESSION['role'];
                 </div>
             </div>
         </div>
-        <!-- <div class="container text-center mt-5">
-            <p class="mb-0" style="color: orange;">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
-            <small>Climb mountains not so the world can see you, but so you can see the world.</small>
-        </div> -->
     </footer>
-    <div class="copyright text-center">
+    <div class="copyright text-center fade-in delay-4">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12">
@@ -390,10 +405,29 @@ $role = $_SESSION['role'];
             </div>
         </div>
     </div>
-    </div>
 
     <!-- JavaScript -->
     <script>
+        // Animate on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in, .scale-in');
+            const windowHeight = window.innerHeight;
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < windowHeight - 50) {
+                    el.style.animationPlayState = 'running';
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set animation-play-state to paused initially
+            document.querySelectorAll('.fade-in, .scale-in').forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+            animateOnScroll();
+        });
+        window.addEventListener('scroll', animateOnScroll);
+
         document.querySelectorAll('.video-wrapper').forEach(wrapper => {
             wrapper.addEventListener('click', () => {
                 const videoSrc = wrapper.querySelector('video source').src;
@@ -425,7 +459,6 @@ $role = $_SESSION['role'];
             }
         });
     </script>
-
 
 </body>
 

@@ -203,8 +203,8 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
             <?php endforeach; ?>
 
             <div class="col">
-                <div class="card h-100 text-center"
-                    style="border: 2px dashed #ccc; background: #f9f9f9; cursor: pointer;" data-bs-toggle="modal"
+                <div class="card h-100 text-center animate__animated animate__zoomIn"
+                    style="border: 2px dashed #ccc; background: #f9f9f9; cursor: pointer; animation-duration:0.7s;" data-bs-toggle="modal"
                     data-bs-target="#addModal">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center">
                         <h5 class="card-title">+ Add Product</h5>
@@ -217,7 +217,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog animate__animated animate__fadeInDown" style="animation-duration:0.5s;">
             <div class="modal-content">
                 <form method="POST" action="products.php" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -296,7 +296,7 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
     <!-- Add Product Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog animate__animated animate__fadeInDown" style="animation-duration:0.5s;">
             <div class="modal-content">
                 <form action="products.php" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -425,6 +425,21 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
             });
         });
     </script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        .product-card {
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.13);
+            background: #f5faff;
+        }
+        .modal-dialog {
+            transition: transform 0.3s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+        }
+    </style>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </html>

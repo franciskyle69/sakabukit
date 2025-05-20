@@ -47,15 +47,14 @@
     <?php include '../includes/navbar.php'; ?>
     <div class="container mt-4">
 
-
-        <h1>Welcome to the Accounts</h1>
-        <p>Accounts section</p>
+        <h1 class="fade-in">Welcome to the Accounts</h1>
+        <p class="fade-in delay-1">Accounts section</p>
 
         <div class="row mt-4">
             <!-- User Table -->
             <div class="col-md-12">
                 <div id="liveAlert" class="mb-3"></div>
-                <div class="card">
+                <div class="card slide-up">
                     <div class="card-body">
                         <input type="text" class="form-control mb-3" id="search" placeholder="Search ...">
                         <table id="userTable" class="table table-striped">
@@ -73,7 +72,7 @@
                             include '../includes/db.php';
                             $users = $pdo->query("SELECT * FROM users ORDER BY id DESC");
                             while ($user = $users->fetch()) {
-                                echo "<tr>
+                                echo "<tr class='fade-in-row'>
                                     <td>{$user['id']}</td>
                                     <td>".htmlspecialchars($user['firstname'])."</td>
                                     <td>".htmlspecialchars($user['lastname'])."</td>
@@ -92,6 +91,55 @@
         </div>
     </div>
 
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInMoveUp 0.8s forwards;
+        }
+        .fade-in.delay-1 {
+            animation-delay: 0.3s;
+        }
+        .slide-up {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: slideUp 0.8s forwards 0.5s;
+        }
+        @keyframes fadeInMoveUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-row {
+            opacity: 0;
+            animation: fadeInRow 0.6s forwards;
+        }
+        @keyframes fadeInRow {
+            to {
+                opacity: 1;
+            }
+        }
+        /* Animate table rows with a slight delay */
+        #userTableBody .fade-in-row {
+            animation-delay: calc(var(--i, 0) * 0.07s + 0.7s);
+        }
+    </style>
+    <script>
+        // Animate table rows with delay
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('#userTableBody .fade-in-row');
+            rows.forEach((row, i) => {
+                row.style.setProperty('--i', i);
+            });
+        });
+    </script>
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 

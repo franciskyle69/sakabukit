@@ -227,17 +227,15 @@ color: #bcd0f7;
 </head>
 
 <body>
-
-
     <div class="container mt-5">
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
+                <div class="card h-100 animate__animated animate__fadeInLeft" style="transition: box-shadow 0.3s;">
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile text-center">
                                 <div class="user-avatar mb-3">
-                                    <img id="profilePreview" src="<?= htmlspecialchars($user['profile_photo'] ?? '/assets/images/default-profile.png') ?>" alt="Profile Photo" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                                    <img id="profilePreview" src="<?= htmlspecialchars($user['profile_photo'] ?? '/assets/images/default-profile.png') ?>" alt="Profile Photo" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover; transition: box-shadow 0.3s, transform 0.3s;">
                                 </div>
                                 <h5 class="user-name"><?= htmlspecialchars(($user['firstname'] ?? '') . ' ' . ($user['lastname'] ?? '')) ?></h5>
                                 <h6 class="user-email"><?= htmlspecialchars($user['email'] ?? '') ?></h6>
@@ -251,10 +249,10 @@ color: #bcd0f7;
                 </div>
             </div>
             <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
+                <div class="card h-100 animate__animated animate__fadeInRight" style="transition: box-shadow 0.3s;">
                     <div class="card-body">
                         <?php if (isset($_SESSION['message'])): ?>
-                            <div class="alert alert-info"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
+                            <div class="alert alert-info animate__animated animate__fadeInDown"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
                         <?php endif; ?>
                         <p class="text-info">Your current information is shown below. Change only what you want to update.</p>
                         <form action="settings.php" method="POST" enctype="multipart/form-data">
@@ -263,25 +261,25 @@ color: #bcd0f7;
                                     <h6 class="mb-3 text-primary">Personal Details</h6>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="firstname">First Name</label>
                                         <input type="text" name="firstname" class="form-control" id="firstname" value="<?= htmlspecialchars($user['firstname'] ?? '') ?>">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="lastname">Last Name</label>
                                         <input type="text" name="lastname" class="form-control" id="lastname" value="<?= htmlspecialchars($user['lastname'] ?? '') ?>">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="email">Email</label>
                                         <input type="email" name="email" class="form-control" id="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="phone">Phone</label>
                                         <input type="text" name="phone" class="form-control" id="phone" value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
                                     </div>
@@ -292,25 +290,25 @@ color: #bcd0f7;
                                     <h6 class="mb-3 text-primary">Address</h6>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="street">Street</label>
                                         <input type="text" name="street" class="form-control" id="street" value="<?= htmlspecialchars($user['street'] ?? '') ?>">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="city">City</label>
                                         <input type="text" name="city" class="form-control" id="city" value="<?= htmlspecialchars($user['city'] ?? '') ?>">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="state">State</label>
                                         <input type="text" name="state" class="form-control" id="state" value="<?= htmlspecialchars($user['state'] ?? '') ?>">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="zip">Zip Code</label>
                                         <input type="text" name="zip" class="form-control" id="zip" value="<?= htmlspecialchars($user['zip'] ?? '') ?>">
                                     </div>
@@ -321,25 +319,25 @@ color: #bcd0f7;
                                     <h6 class="mb-3 text-primary" style="margin-top: 15px;">Profile Photo & Password</h6>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="profile_photo">Profile Photo</label>
                                         <input type="file" name="profile_photo" class="form-control" id="profilePhotoInput" onchange="previewProfilePhoto(event)">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="about">About</label>
                                         <textarea name="about" class="form-control" id="about" rows="2"><?= htmlspecialchars($user['about'] ?? '') ?></textarea>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="password">New Password (leave blank to keep current)</label>
                                         <input type="password" name="password" class="form-control" id="password">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
+                                    <div class="form-group animate__animated animate__fadeInUp" style="transition: background 0.3s;">
                                         <label for="confirm_password">Confirm New Password</label>
                                         <input type="password" name="confirm_password" class="form-control" id="confirm_password">
                                     </div>
@@ -348,8 +346,8 @@ color: #bcd0f7;
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right" style="margin-top: 15px;">
-                                        <a href="settings.php" class="btn btn-secondary">Cancel</a>
-                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                        <a href="settings.php" class="btn btn-secondary animate__animated animate__fadeInLeft" style="transition: background 0.3s;">Cancel</a>
+                                        <button type="submit" class="btn btn-primary animate__animated animate__fadeInRight" style="transition: background 0.3s;">Update Profile</button>
                                     </div>
                                 </div>
                             </div>
@@ -359,15 +357,44 @@ color: #bcd0f7;
             </div>
         </div>
     </div>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script>
     function previewProfilePhoto(event) {
         const reader = new FileReader();
         reader.onload = function(){
             const output = document.getElementById('profilePreview');
             output.src = reader.result;
+            output.classList.add('animate__animated', 'animate__zoomIn');
+            setTimeout(() => {
+                output.classList.remove('animate__zoomIn');
+            }, 800);
         };
         reader.readAsDataURL(event.target.files[0]);
     }
+
+    // Add hover effect for card shadow and avatar
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.card').forEach(function(card) {
+            card.addEventListener('mouseenter', function() {
+                card.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
+            });
+            card.addEventListener('mouseleave', function() {
+                card.style.boxShadow = '';
+            });
+        });
+        const avatar = document.getElementById('profilePreview');
+        if (avatar) {
+            avatar.addEventListener('mouseenter', function() {
+                avatar.style.transform = 'scale(1.08)';
+                avatar.style.boxShadow = '0 4px 16px #F28123';
+            });
+            avatar.addEventListener('mouseleave', function() {
+                avatar.style.transform = '';
+                avatar.style.boxShadow = '';
+            });
+        }
+    });
     </script>
 </body>
 <footer style="background-color: #051922;">

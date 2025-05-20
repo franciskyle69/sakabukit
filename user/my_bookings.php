@@ -47,14 +47,14 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h2>My Bookings</h2>
+    <div class="container mt-4 animate__animated animate__fadeIn">
+        <h2 class="animate__animated animate__fadeInDown">My Bookings</h2>
         <?php if (empty($bookings)): ?>
-            <div class="alert alert-info">
+            <div class="alert alert-info animate__animated animate__fadeInUp">
                 You haven't made any bookings yet. <a href="bookings.php" class="alert-link">Make a booking now!</a>
             </div>
         <?php else: ?>
-            <table id="bookingsTable" class="table table-bordered table-hover">
+            <table id="bookingsTable" class="table table-bordered table-hover animate__animated animate__fadeInUp" style="transition: box-shadow 0.3s;">
                 <thead>
                     <tr>
                         <th>Booking ID</th>
@@ -70,7 +70,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <?php foreach ($bookings as $booking): ?>
-                        <tr>
+                        <tr class="booking-row" style="transition: background 0.3s;">
                             <td><?= $booking['id'] ?></td>
                             <td><?= htmlspecialchars($booking['destination']) ?></td>
                             <td><?= htmlspecialchars($booking['date']) ?></td>
@@ -92,7 +92,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         break;
                                 }
                                 ?>
-                                <span class="badge <?= $statusClass ?>">
+                                <span class="badge <?= $statusClass ?> animate__animated animate__pulse" style="transition: background 0.3s;">
                                     <?= ucfirst($booking['status']) ?>
                                 </span>
                             </td>
@@ -111,8 +111,8 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
         
     </div>
-    <footer style="background-color: #051922;">
-        <div class="footer-area">
+    <footer style="background-color: #051922; transition: background 0.5s;">
+        <div class="footer-area animate__animated animate__fadeInUp">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
@@ -144,9 +144,9 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <form action="#">
                                 <div style="display: flex; align-items: center; gap: 10px;">
                                     <input type="email" placeholder="Email"
-                                        style="flex: 1; height: 40px; padding: 0 10px;">
+                                        style="flex: 1; height: 40px; padding: 0 10px; transition: box-shadow 0.3s;">
                                     <button type="submit"
-                                        style="height: 40px; display: flex; align-items: center; justify-content: center; padding: 0 15px;">
+                                        style="height: 40px; display: flex; align-items: center; justify-content: center; padding: 0 15px; transition: background 0.3s;">
                                         <i class="fas fa-paper-plane"></i>
                                     </button>
                                 </div>
@@ -156,12 +156,8 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-        <!-- <div class="container text-center mt-5">
-            <p class="mb-0" style="color: orange;">&copy; <?= date('Y'); ?> Saka Buk IT. All rights reserved.</p>
-            <small>Climb mountains not so the world can see you, but so you can see the world.</small>
-        </div> -->
     </footer>
-    <div class="copyright text-center">
+    <div class="copyright text-center animate__animated animate__fadeInUp">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12">
@@ -174,14 +170,46 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     </div>
 
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#bookingsTable').DataTable();
+
+            // Row hover transition
+            $('.booking-row').hover(
+                function() {
+                    $(this).css('background', '#f5f5f5');
+                },
+                function() {
+                    $(this).css('background', '');
+                }
+            );
         });
     </script>
+    <style>
+        /* Smooth transitions for table rows and badges */
+        .booking-row {
+            transition: background 0.3s;
+        }
+        .badge {
+            transition: background 0.3s, color 0.3s;
+        }
+        /* Animate table on load */
+        #bookingsTable {
+            transition: box-shadow 0.3s;
+        }
+        #bookingsTable:hover {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        /* Animate footer on hover */
+        footer:hover {
+            background: #07335c;
+        }
+    </style>
 </body>
 
 

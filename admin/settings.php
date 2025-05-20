@@ -181,12 +181,12 @@ color: #bcd0f7;
     <div class="container mt-5">
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
+                <div class="card h-100 animate__animated animate__fadeInLeft" style="transition: box-shadow 0.3s;">
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile text-center">
                                 <div class="user-avatar mb-3">
-                                    <img id="profilePreview" src="<?= htmlspecialchars($user['profile_photo'] ?? '../assets/images/default-profile.png') ?>" alt="Profile Photo" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                                    <img id="profilePreview" src="<?= htmlspecialchars($user['profile_photo'] ?? '../assets/images/default-profile.png') ?>" alt="Profile Photo" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover; transition: box-shadow 0.3s, transform 0.3s;">
                                 </div>
                                 <h5 class="user-name"><?= htmlspecialchars(($user['firstname'] ?? '') . ' ' . ($user['lastname'] ?? '')) ?></h5>
                                 <h6 class="user-email"><?= htmlspecialchars($user['email'] ?? '') ?></h6>
@@ -200,10 +200,10 @@ color: #bcd0f7;
                 </div>
             </div>
             <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
+                <div class="card h-100 animate__animated animate__fadeInRight" style="transition: box-shadow 0.3s;">
                     <div class="card-body">
                         <?php if (isset($_SESSION['message'])): ?>
-                            <div class="alert alert-info"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
+                            <div class="alert alert-info animate__animated animate__fadeInDown"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
                         <?php endif; ?>
                         <form action="settings.php" method="POST" enctype="multipart/form-data">
                             <div class="row gutters" style="color: #fff;">
@@ -213,25 +213,25 @@ color: #bcd0f7;
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" name="firstname" class="form-control" id="firstname" value="<?= htmlspecialchars($user['firstname'] ?? '') ?>" required>
+                                        <input type="text" name="firstname" class="form-control" id="firstname" value="<?= htmlspecialchars($user['firstname'] ?? '') ?>" required style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" name="lastname" class="form-control" id="lastname" value="<?= htmlspecialchars($user['lastname'] ?? '') ?>" required>
+                                        <input type="text" name="lastname" class="form-control" id="lastname" value="<?= htmlspecialchars($user['lastname'] ?? '') ?>" required style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" name="email" class="form-control" id="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>" required>
+                                        <input type="email" name="email" class="form-control" id="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>" required style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="phone">Phone</label>
-                                        <input type="text" name="phone" class="form-control" id="phone" value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
+                                        <input type="text" name="phone" class="form-control" id="phone" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                             </div>
@@ -242,25 +242,25 @@ color: #bcd0f7;
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="street">Street</label>
-                                        <input type="text" name="street" class="form-control" id="street" value="<?= htmlspecialchars($user['street'] ?? '') ?>">
+                                        <input type="text" name="street" class="form-control" id="street" value="<?= htmlspecialchars($user['street'] ?? '') ?>" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="city">City</label>
-                                        <input type="text" name="city" class="form-control" id="city" value="<?= htmlspecialchars($user['city'] ?? '') ?>">
+                                        <input type="text" name="city" class="form-control" id="city" value="<?= htmlspecialchars($user['city'] ?? '') ?>" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="state">State</label>
-                                        <input type="text" name="state" class="form-control" id="state" value="<?= htmlspecialchars($user['state'] ?? '') ?>">
+                                        <input type="text" name="state" class="form-control" id="state" value="<?= htmlspecialchars($user['state'] ?? '') ?>" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="zip">Zip Code</label>
-                                        <input type="text" name="zip" class="form-control" id="zip" value="<?= htmlspecialchars($user['zip'] ?? '') ?>">
+                                        <input type="text" name="zip" class="form-control" id="zip" value="<?= htmlspecialchars($user['zip'] ?? '') ?>" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                             </div>
@@ -277,27 +277,27 @@ color: #bcd0f7;
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="about">About</label>
-                                        <textarea name="about" class="form-control" id="about" rows="2"><?= htmlspecialchars($user['about'] ?? '') ?></textarea>
+                                        <textarea name="about" class="form-control" id="about" rows="2" style="transition: border-color 0.3s;"><?= htmlspecialchars($user['about'] ?? '') ?></textarea>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="password">New Password (leave blank to keep current)</label>
-                                        <input type="password" name="password" class="form-control" id="password">
+                                        <input type="password" name="password" class="form-control" id="password" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="confirm_password">Confirm New Password</label>
-                                        <input type="password" name="confirm_password" class="form-control" id="confirm_password">
+                                        <input type="password" name="confirm_password" class="form-control" id="confirm_password" style="transition: border-color 0.3s;">
                                     </div>
                                 </div>
                             </div>
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right" style="margin-top: 15px;">
-                                        <a href="settings.php" class="btn btn-secondary">Cancel</a>
-                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                        <a href="settings.php" class="btn btn-secondary" style="transition: background 0.3s, color 0.3s;">Cancel</a>
+                                        <button type="submit" class="btn btn-primary" style="transition: background 0.3s, color 0.3s;">Update Profile</button>
                                     </div>
                                 </div>
                             </div>
@@ -307,12 +307,17 @@ color: #bcd0f7;
             </div>
         </div>
     </div>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script>
     function previewProfilePhoto(event) {
         const reader = new FileReader();
         reader.onload = function(){
             const output = document.getElementById('profilePreview');
+            output.classList.remove('animate__pulse');
+            void output.offsetWidth; // trigger reflow for animation restart
             output.src = reader.result;
+            output.classList.add('animate__animated', 'animate__pulse');
         };
         reader.readAsDataURL(event.target.files[0]);
     }

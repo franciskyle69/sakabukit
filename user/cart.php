@@ -1,25 +1,25 @@
 <!-- favicon -->
 <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-	<!-- fontawesome -->
-	<link rel="stylesheet" href="../assets/css/all.min.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-	<!-- owl carousel -->
-	<link rel="stylesheet" href="../assets/css/owl.carousel.css">
-	<!-- magnific popup -->
-	<link rel="stylesheet" href="../assets/css/magnific-popup.css">
-	<!-- animate css -->
-	<link rel="stylesheet" href="../assets/css/animate.css">
-	<!-- mean menu css -->
-	<link rel="stylesheet" href="../assets/css/meanmenu.min.css">
-	<!-- main style -->
-	<link rel="stylesheet" href="../assets/css/main.css">
-	<!-- responsive -->
-	<link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+<!-- google font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+<!-- fontawesome -->
+<link rel="stylesheet" href="../assets/css/all.min.css">
+<!-- bootstrap -->
+<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+<!-- owl carousel -->
+<link rel="stylesheet" href="../assets/css/owl.carousel.css">
+<!-- magnific popup -->
+<link rel="stylesheet" href="../assets/css/magnific-popup.css">
+<!-- animate css -->
+<link rel="stylesheet" href="../assets/css/animate.css">
+<!-- mean menu css -->
+<link rel="stylesheet" href="../assets/css/meanmenu.min.css">
+<!-- main style -->
+<link rel="stylesheet" href="../assets/css/main.css">
+<!-- responsive -->
+<link rel="stylesheet" href="../assets/css/responsive.css">
+<link rel="icon" type="image/png" href="../assets/images/logo.png">
 
 <?php
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
         $stmt = $pdo->prepare("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)");
         $stmt->execute([$user_id, $product_id, $quantity]);
     }
-    
+
     header('Location: cart.php');
     exit();
 }
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
 if (isset($_GET['action'], $_GET['id'])) {
     $product_id = $_GET['id'];
     $user_id = $_SESSION['user_id'];
-    
+
     if ($_GET['action'] === 'increase') {
         $stmt = $pdo->prepare("UPDATE cart_items SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?");
         $stmt->execute([$user_id, $product_id]);
@@ -64,7 +64,7 @@ if (isset($_GET['action'], $_GET['id'])) {
         $stmt = $pdo->prepare("SELECT quantity FROM cart_items WHERE user_id = ? AND product_id = ?");
         $stmt->execute([$user_id, $product_id]);
         $item = $stmt->fetch();
-        
+
         if ($item && $item['quantity'] > 1) {
             $stmt = $pdo->prepare("UPDATE cart_items SET quantity = quantity - 1 WHERE user_id = ? AND product_id = ?");
             $stmt->execute([$user_id, $product_id]);
@@ -99,7 +99,7 @@ $stmt->execute([$user_id]);
 $cart_items = $stmt->fetchAll();
 ?>
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -141,10 +141,12 @@ $cart_items = $stmt->fetchAll();
         html {
             font-size: 16px;
         }
+
         body {
             font-family: 'Open Sans', 'Poppins', Arial, sans-serif;
             font-size: 1rem;
         }
+
         .cart-img {
             width: 60px;
             height: 60px;
@@ -159,139 +161,206 @@ $cart_items = $stmt->fetchAll();
 
     <!-- jQuery -->
     <script src="../assets/js/jquery-1.11.3.min.js"></script>
-    
+
     <!-- Bootstrap JS -->
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Mean Menu JS -->
     <script src="../assets/js/jquery.meanmenu.min.js"></script>
-    
+
     <!-- Sticky JS -->
     <script src="../assets/js/sticker.js"></script>
-    
+
     <!-- Main JS -->
     <script src="../assets/js/main.js"></script>
 </head>
 
 <body>
-    <div style=""> <?php include '../includes/navbar.php'; ?> </div>
+    <<<<<<< HEAD <div style=""> <?php include '../includes/navbar.php'; ?> </div>
 
-    <!-- <div class="breadcrumb-section breadcrumb-bg">
-		<div class="container">
-			<div class="row" style="height: 10px;">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="breadcrumb-text">
-						<p>Fresh and Organic</p>
-						<h1>Cart</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-
-    <div class="cart-section mt-150 mb-150">
+        <!-- <div class="breadcrumb-section breadcrumb-bg">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-12">
-                    <div class="cart-table-wrap">
-                        <table class="cart-table">
-                            <thead class="cart-table-head">
-                                <tr class="table-head-row">
-                                    <th class="product-remove"></th>
-                                    <th class="product-image">Product Image</th>
-                                    <th class="product-name">Name</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
-                                    <th class="product-total">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $total = 0; ?>
-                                <?php if (empty($cart_items)): ?>
-                                    <tr class="table-body-row">
-                                        <td colspan="6" class="text-center">Your cart is empty.</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($cart_items as $item): ?>
-                                        <?php
-                                        $subtotal = $item['price'] * $item['quantity'];
-                                        $total += $subtotal;
-                                        $imageName = !empty($item['image']) ? basename($item['image']) : 'placeholder.png';
-                                        $imagePath = '../assets/images/' . $imageName;
-                                        ?>
-                                        <tr class="table-body-row">
-                                            <td class="product-remove">
-                                                <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>"><i class="far fa-window-close"></i></a>
-                                            </td>
-                                            <td class="product-image">
-                                                <?php if (file_exists($imagePath)): ?>
-                                                    <img src="<?= htmlspecialchars($imagePath) ?>" alt="Product Image">
-                                                <?php else: ?>
-                                                    <img src="../assets/images/placeholder.png" alt="No Image">
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="product-name"><?= htmlspecialchars($item['name']) ?></td>
-                                            <td class="product-price">₱<?= number_format($item['price'], 2) ?></td>
-                                            <td class="product-quantity">
-                                                <a href="cart.php?action=increase&id=<?= $item['product_id'] ?>" class="btn btn-success btn-sm">+</a>
-                                                <?= $item['quantity'] ?>
-                                                <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>" class="btn btn-warning btn-sm">-</a>
-                                            </td>
-                                            <td class="product-total">₱<?= number_format($subtotal, 2) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+            <div class="row" style="height: 10px;">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <p>Fresh and Organic</p>
+                        <h1>Cart</h1>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div> -->
+        =======
+        <div style=""><?php include '../includes/navbar.php'; ?></div>
 
-                <div class="col-lg-4">
-                    <div class="total-section">
-                        <table class="total-table">
-                            <thead class="total-table-head">
-                                <tr class="table-total-row">
-                                    <th>Total</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="total-data">
-                                    <td><strong>Subtotal: </strong></td>
-                                    <td>₱<?= number_format($total, 2) ?></td>
-                                </tr>
-                                <tr class="total-data">
-                                    <td><strong>Shipping: </strong></td>
-                                    <td>₱<?= empty($cart_items) ? '0.00' : '45.00' ?></td>
-                                </tr>
-                                <tr class="total-data">
-                                    <td><strong>Total: </strong></td>
-                                    <td>₱<?= empty($cart_items) ? '0.00' : number_format($total + 45, 2) ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="cart-buttons">
-                            <a href="products.php" class="btn btn-secondary btn-block">Back to Products</a>
-                            <a href="cart.php?clear=1" class="btn btn-danger btn-block">Clear Cart</a>
-                            <form action="checkout.php" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-primary btn-block" <?= empty($cart_items) ? 'disabled' : '' ?>>Check Out</button>
-                            </form>
+        <!-- Add Animate.css CDN for animations -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        >>>>>>> 1155dbccf0167f25dbfe136279d0f9b3d64c94be
+
+        <style>
+            /* Fade in for cart section */
+            .cart-section {
+                animation: fadeInUp 0.8s;
+            }
+
+            /* Smooth transition for quantity and total changes */
+            .cart-table td,
+            .cart-table th,
+            .total-table td,
+            .total-table th {
+                transition: background 0.3s, color 0.3s;
+            }
+
+            /* Animate row on hover */
+            .cart-table .table-body-row:hover {
+                background: #f8f9fa;
+                transition: background 0.3s;
+            }
+
+            /* Button hover effect */
+            .cart-buttons .btn,
+            .cart-table .btn {
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .cart-buttons .btn:hover,
+            .cart-table .btn:hover {
+                transform: translateY(-2px) scale(1.05);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+
+            /* Animate coupon section */
+            .coupon-section {
+                animation: fadeIn 1s;
+            }
+        </style>
+
+        <script>
+            // Animate quantity cell when changed
+            document.addEventListener('DOMContentLoaded', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('action') && urlParams.has('id')) {
+                    const id = urlParams.get('id');
+                    const action = urlParams.get('action');
+                    const row = document.querySelector(`a[href*="id=${id}"]`)?.closest('tr');
+                    if (row) {
+                        row.classList.add('animate__animated', 'animate__flash');
+                        setTimeout(() => {
+                            row.classList.remove('animate__animated', 'animate__flash');
+                        }, 1000);
+                    }
+                }
+            });
+        </script>
+
+        <div class="cart-section mt-150 mb-150 animate__animated animate__fadeInUp">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="cart-table-wrap">
+                            <table class="cart-table">
+                                <thead class="cart-table-head">
+                                    <tr class="table-head-row">
+                                        <th class="product-remove"></th>
+                                        <th class="product-image">Product Image</th>
+                                        <th class="product-name">Name</th>
+                                        <th class="product-price">Price</th>
+                                        <th class="product-quantity">Quantity</th>
+                                        <th class="product-total">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $total = 0; ?>
+                                    <?php if (empty($cart_items)): ?>
+                                        <tr class="table-body-row animate__animated animate__fadeIn">
+                                            <td colspan="6" class="text-center">Your cart is empty.</td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <?php foreach ($cart_items as $item): ?>
+                                            <?php
+                                            $subtotal = $item['price'] * $item['quantity'];
+                                            $total += $subtotal;
+                                            $imageName = !empty($item['image']) ? basename($item['image']) : 'placeholder.png';
+                                            $imagePath = '../assets/images/' . $imageName;
+                                            ?>
+                                            <tr class="table-body-row animate__animated animate__fadeIn">
+                                                <td class="product-remove">
+                                                    <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>"><i
+                                                            class="far fa-window-close"></i></a>
+                                                </td>
+                                                <td class="product-image">
+                                                    <?php if (file_exists($imagePath)): ?>
+                                                        <img src="<?= htmlspecialchars($imagePath) ?>" alt="Product Image"
+                                                            class="cart-img animate__animated animate__zoomIn">
+                                                    <?php else: ?>
+                                                        <img src="../assets/images/placeholder.png" alt="No Image"
+                                                            class="cart-img animate__animated animate__zoomIn">
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td class="product-name"><?= htmlspecialchars($item['name']) ?></td>
+                                                <td class="product-price">₱<?= number_format($item['price'], 2) ?></td>
+                                                <td class="product-quantity">
+                                                    <a href="cart.php?action=increase&id=<?= $item['product_id'] ?>"
+                                                        class="btn btn-success btn-sm">+</a>
+                                                    <?= $item['quantity'] ?>
+                                                    <a href="cart.php?action=decrease&id=<?= $item['product_id'] ?>"
+                                                        class="btn btn-warning btn-sm">-</a>
+                                                </td>
+                                                <td class="product-total">₱<?= number_format($subtotal, 2) ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="coupon-section">
-                        <h3>Apply Coupon</h3>
-                        <div class="coupon-form-wrap">
-                            <form action="#" method="POST">
-                                <p><input type="text" name="coupon_code" placeholder="Coupon"></p>
-                                <p><input type="submit" value="Apply"></p>
-                            </form>
+                    <div class="col-lg-4">
+                        <div class="total-section animate__animated animate__fadeInRight">
+                            <table class="total-table">
+                                <thead class="total-table-head">
+                                    <tr class="table-total-row">
+                                        <th>Total</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="total-data">
+                                        <td><strong>Subtotal: </strong></td>
+                                        <td>₱<?= number_format($total, 2) ?></td>
+                                    </tr>
+                                    <tr class="total-data">
+                                        <td><strong>Shipping: </strong></td>
+                                        <td>₱<?= empty($cart_items) ? '0.00' : '45.00' ?></td>
+                                    </tr>
+                                    <tr class="total-data">
+                                        <td><strong>Total: </strong></td>
+                                        <td>₱<?= empty($cart_items) ? '0.00' : number_format($total + 45, 2) ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="cart-buttons">
+                                <a href="products.php" class="btn btn-secondary btn-block">Back to Products</a>
+                                <a href="cart.php?clear=1" class="btn btn-danger btn-block">Clear Cart</a>
+                                <form action="checkout.php" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-primary btn-block" <?= empty($cart_items) ? 'disabled' : '' ?>>Check Out</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="coupon-section animate__animated animate__fadeInUp">
+                            <h3>Apply Coupon</h3>
+                            <div class="coupon-form-wrap">
+                                <form action="#" method="POST">
+                                    <p><input type="text" name="coupon_code" placeholder="Coupon"></p>
+                                    <p><input type="submit" value="Apply"></p>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

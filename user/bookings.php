@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Your Adventure - Saka Buk IT</title>
     <!-- External Stylesheets (refactored for consistency) -->
+    <!-- External Stylesheets (refactored for consistency) -->
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
@@ -17,7 +18,26 @@
     <link rel="stylesheet" href="../assets/css/meanmenu.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/meanmenu.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <style>
+        html {
+            font-size: 16px;
+        }
+        body {
+            font-family: 'Open Sans', 'Poppins', Arial, sans-serif;
+            font-size: 1rem;
+        }
+    </style>
     <style>
         html {
             font-size: 16px;
@@ -47,14 +67,14 @@
     <?php include '../includes/navbar.php'; ?>
 
     <main class="container mt-4 mb-5">
-        <div class="content p-4 fade-in">
+        <div class="content p-4 fade-in-anim">
             <div class="text-center mb-5">
-                <h2 class="display-4 mb-3">Book Your Adventure</h2>
-                <p class="lead text-muted">Experience the beauty of nature with our guided tours</p>
+                <h2 class="display-4 mb-3 slide-down-anim">Book Your Adventure</h2>
+                <p class="lead text-muted fade-in-anim" style="animation-delay: 0.3s;">Experience the beauty of nature with our guided tours</p>
             </div>
             
             <?php if (isset($_SESSION['success_message'])): ?>
-                <div class="alert alert-success fade-in">
+                <div class="alert alert-success fade-in-anim" style="animation-delay: 0.5s;">
                     <i class="fas fa-check-circle me-2"></i>
                     <?php 
                     echo $_SESSION['success_message'];
@@ -64,7 +84,7 @@
             <?php endif; ?>
 
             <?php if (isset($_SESSION['error_message'])): ?>
-                <div class="alert alert-danger fade-in">
+                <div class="alert alert-danger fade-in-anim" style="animation-delay: 0.5s;">
                     <i class="fas fa-exclamation-circle me-2"></i>
                     <?php 
                     echo $_SESSION['error_message'];
@@ -73,6 +93,7 @@
                 </div>
             <?php endif; ?>
 
+            <form action="../user/process_booking.php" method="POST" class="booking-form fade-in-anim" style="animation-delay: 0.6s;">
             <form action="process_booking.php" method="POST" class="booking-form">
             <form action="../user/process_booking.php" method="POST" class="booking-form">
                 <div class="row">
@@ -84,6 +105,9 @@
                             <option value="">Select a destination</option>
                             <option value="kulago">Mount Kulago</option>
                             <option value="holon">Lake Holon</option>
+                            <option value="apo">Mt.Apo</option>
+                            <option value="panimahawa">Panimahawa ridge</option>
+
                         </select>
                     </div>
 
@@ -125,7 +149,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg">
+                    <button type="submit" class="btn btn-primary btn-lg btn-anim">
                         <i class="fas fa-paper-plane me-2"></i>Submit Booking
                     </button>
                 </div>
@@ -134,7 +158,7 @@
             <!-- Package Information Cards -->
             <div class="row mt-5">
                 <div class="col-md-4 mb-4">
-                    <div class="card package-card h-100">
+                    <div class="card package-card h-100 card-anim" style="animation-delay: 0.7s;">
                         <div class="card-body text-center">
                             <i class="fas fa-hiking fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Basic Package</h5>
@@ -148,7 +172,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card package-card h-100">
+                    <div class="card package-card h-100 card-anim" style="animation-delay: 0.9s;">
                         <div class="card-body text-center">
                             <i class="fas fa-campground fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Premium Package</h5>
@@ -162,7 +186,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card package-card h-100">
+                    <div class="card package-card h-100 card-anim" style="animation-delay: 1.1s;">
                         <div class="card-body text-center">
                             <i class="fas fa-crown fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Deluxe Package</h5>
@@ -184,7 +208,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <div class="footer-box about-widget">
+                    <div class="footer-box about-widget fade-in-anim" style="animation-delay: 1.3s;">
                         <h2 class="widget-title">About us</h2>
                         <p>Saka Bukit is your trusted destination for eCommerce and booking services.
                              We offer a seamless shopping experience and easy reservations for various 
@@ -193,7 +217,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="footer-box get-in-touch">
+                    <div class="footer-box get-in-touch fade-in-anim" style="animation-delay: 1.4s;">
                         <h2 class="widget-title">Get in Touch</h2>
                         <ul>
                             <li> Fortich Street, Barangay 3, Malaybalay City, Bukidnon</li>
@@ -205,7 +229,7 @@
                     
                 
                     <div class="col-lg-3 col-md-6">
-                        <div class="footer-box subscribe">
+                        <div class="footer-box subscribe fade-in-anim" style="animation-delay: 1.5s;">
                         <h2 class="widget-title">Subscribe</h2>
                         <p>Subscribe to our mailing list to get the latest updates.</p>
                         <form action="#">
@@ -226,10 +250,11 @@
             <small>Climb mountains not so the world can see you, but so you can see the world.</small>
         </div> -->
     </footer>
-        <div class="copyright text-center">
+        <div class="copyright text-center fade-in-anim" style="animation-delay: 1.7s;">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-12">
+                    <p>Copyrights &copy; 2025 - <a href="../user/index.php">SAKA BUKIT</a>, All Rights Reserved.<br>
                     <p>Copyrights &copy; 2025 - <a href="../user/index.php">SAKA BUKIT</a>, All Rights Reserved.<br>
                         Climb mountains not so the world can see you, but so you can see the world
                         </p>
@@ -237,19 +262,72 @@
                 </div>
             </div>
         </div>
-	</div>
+    </div>
+
+    <style>
+        /* Animations and transitions */
+        .fade-in-anim {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.7s forwards;
+        }
+        .slide-down-anim {
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: slideDown 0.8s forwards;
+        }
+        .card-anim {
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            animation: cardFadeIn 0.7s forwards;
+        }
+        .btn-anim {
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn-anim:hover, .btn-anim:focus {
+            background: #ff8800;
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 4px 18px rgba(255,136,0,0.15);
+        }
+        .package-card {
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .package-card:hover {
+            box-shadow: 0 8px 32px rgba(5,25,34,0.18);
+            transform: translateY(-10px) scale(1.03);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    </style>
 
     <script>
         // Set minimum date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
 
-        // Add hover effects to package cards
-        document.querySelectorAll('.package-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
+        // Animate elements on load with delay
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.fade-in-anim, .slide-down-anim, .card-anim').forEach(function (el, i) {
+                // If animation-delay is set inline, use it; else stagger
+                if (!el.style.animationDelay) {
+                    el.style.animationDelay = (i * 0.15) + 's';
+                }
             });
         });
 
